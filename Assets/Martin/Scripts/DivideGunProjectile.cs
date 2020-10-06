@@ -3,6 +3,7 @@
 public class DivideGunProjectile : MonoBehaviour
 {
     public float speed = 2f;
+    public float spread = 3f;
     public float timeToLive = 10f;
 
     private float _startTime;
@@ -31,8 +32,8 @@ public class DivideGunProjectile : MonoBehaviour
             int newHealth = enemyStats.GetHealth() / 2;
             enemyStats.SetHealth(newHealth > 0 ? newHealth : 1);
             enemyStats.transform.localScale *= 0.75f;
-            GameObject clone = Instantiate(other.gameObject, transform.up * 2 + Random.Range(-1f, 1f) * transform.right, Quaternion.identity);
-            Destroy(gameObject);
+            GameObject clone = Instantiate(other.gameObject, (transform.up * 2 + Random.Range(-1f, 1f) * transform.right) * spread, Quaternion.identity);
         }
+        Destroy(gameObject);
     }
 }
