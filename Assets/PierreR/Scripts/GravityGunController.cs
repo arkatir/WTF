@@ -5,47 +5,68 @@ using UnityEngine;
 public class GravityGunController : MonoBehaviour
 {
     public GameObject player;
+    public float floatingForce = 1f;
+    public Rigidbody objSelRigidB;
+    public float floatingPushInterval = 1;
+    public float floatingMass = 0.1f;
+    public float pushForce = 100f;
+    public float deltaDistance = 1f;
 
     private bool selected = true;
+    private RaycastHit shootingRaycast;
     private Vector3 rayOrigin;
     private Vector3 rayDirection;
-    // Start is called before the first frame update
-    void Start()
-    {
-    }
+    private bool objectHold = false;
+    private Vector3 objSelCoordToTendTo;
 
-    public void ToggleWeaponSelection()
+    void FixedUpdate()
     {
-        selected = !selected;
-        
+        if (objectHold)
+        {
+            objSelCoordToTendTo = Camera.main.transform.position + Camera.main.transform.forward * 5;
+            Vector3 vdist = objSelCoordToTendTo - objSelRigidB.transform.position;
+            objSelRigidB.AddForce(vdist * 20 * objSelRigidB.mass);
+            objSelRigidB.velocity = vdist.normalized * Mathf.Min(20,objSelRigidB.velocity.magnitude);   
+            if (vdist.magnitude < deltaDistance)
+            {
+                objSelRigidB.velocity /= 2;
+            }
+        }
     }
 
     // Update is called once per frame
-    void Update()
-    {
+    void Update() {
+
         rayOrigin = Camera.main.transform.position;
         rayDirection = Camera.main.transform.forward;
 
         Debug.DrawLine(rayOrigin, rayOrigin + rayDirection * 100, Color.red);
-        /*if (Input.GetKey(KeyCode.G))
+        
+        if (Input.GetKey(KeyCode.F))
         {
-            ToggleWeaponSelection();
-        }*/
-
-        if (selected && Input.GetMouseButtonDown(0))
-        {
-            Debug.Log("shoot!");
-            RaycastHit shootingRaycast = new RaycastHit();
-            bool touchedSomething = Physics.Raycast(rayOrigin, rayDirection, out shootingRaycast);
-            Debug.Log("touchedSomething ? " + touchedSomething);
-            if (touchedSomething)
-            {
-                Rigidbody objectTouchedRB = shootingRaycast.collider.GetComponent<Rigidbody>();
-                if (objectTouchedRB)
-                {
-                    objectTouchedRB.transform.position = player.transform.position;
-                }
-            }     
+            Debug.Log("TODO : Throw");
         }
+
+        if (selected && Input.GetMouseButtonDown(0)) {
+            
+            if (!objectHold)
+            {
+                bool touchedSomething = Physics.Raycast(rayOrigin, rayDirection, out shootingRaycast);
+                if (touchedSomething && !objectHold)
+                {
+                    Rigidbody objectTouchedRB = shootingRaycast.collider.GetComponent<Rigidbody>();
+                    if (objectTouchedRB)
+                    {
+                        objectHold = true;
+                        objSelRigidB = objectTouchedRB;
+                    }
+                }
+            } else {
+                Debug.Log("PUSH !");
+                objSelRigidB.AddForce(Camera.main.transform.forward * pushForce, ForceMode.Impulse);
+                objSelRigidB = null;
+                objectHold = false;
+            }
+        }    
     }
 }
