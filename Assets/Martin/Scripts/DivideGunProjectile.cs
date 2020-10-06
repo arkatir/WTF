@@ -34,6 +34,9 @@ public class DivideGunProjectile : MonoBehaviour
             enemyStats.transform.localScale *= 0.75f;
             GameObject clone = Instantiate(other.gameObject, (transform.up * 2 + Random.Range(-1f, 1f) * transform.right) * spread, Quaternion.identity);
         }
-        Destroy(gameObject);
+        if (!other.TryGetComponent(out DivideGun divideGun))
+        {
+            Destroy(gameObject);
+        }
     }
 }
