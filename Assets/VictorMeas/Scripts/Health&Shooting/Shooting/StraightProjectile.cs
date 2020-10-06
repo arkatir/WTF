@@ -67,15 +67,30 @@ public class StraightProjectile : MonoBehaviour
         switch (targetToHit)
         {
             case directedTowards.Player:
-                PlayerStats healthManager = other.gameObject.GetComponent<PlayerStats>();
-                if (healthManager)
+                if (other.gameObject.layer == LayerMask.NameToLayer("Player"))
                 {
-                    healthManager.RemoveHealth(damage);
+                    PlayerStats healthManager = other.gameObject.GetComponent<PlayerStats>();
+                    if (healthManager)
+                    {
+                        healthManager.RemoveHealth(damage);
+                    }
                 }
                 break;
             case directedTowards.Enemy:
+                if (other.gameObject.layer == LayerMask.NameToLayer("Enemy"))
+                {
+                    EnemyStats enemyManager = other.gameObject.GetComponent<EnemyStats>();
+                    if (enemyManager)
+                    {
+                        enemyManager.RemoveHealth(damage);
+                    }
+                }
                 break;
             case directedTowards.Environment:
+                if (other.gameObject.layer == LayerMask.NameToLayer("Environment"))
+                {
+                    //If we hit a gameobject with tag environment
+                }
                 break;
             default:
                 break;

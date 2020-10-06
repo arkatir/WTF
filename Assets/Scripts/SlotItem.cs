@@ -4,15 +4,15 @@ using UnityEngine;
 
 public class SlotItem : MonoBehaviour
 {
-    public int slotIndex;
+    public int slotIndex = 0;
     // Start is called before the first frame update
 
-    public virtual void OnSlotItemInstantiation()
+    public virtual void OnInsert()
     {
         Debug.Log("OnSlotItemInstantiation base");
     }
 
-    public virtual void OnSlotItemDestroy()
+    public virtual void OnRemove()
     {
         Debug.Log("OnSlotItemDestroy base");
     }
