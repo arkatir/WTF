@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GravityGunController : MonoBehaviour
+public class GravityGunController : SlotItem
 {
     public GameObject player;
     public float floatingForce = 1f;
@@ -23,14 +23,7 @@ public class GravityGunController : MonoBehaviour
     {
         if (objectHold)
         {
-            objSelCoordToTendTo = Camera.main.transform.position + Camera.main.transform.forward * 5;
-            Vector3 vdist = objSelCoordToTendTo - objSelRigidB.transform.position;
-            objSelRigidB.AddForce(vdist * 20 * objSelRigidB.mass);
-            objSelRigidB.velocity = vdist.normalized * Mathf.Min(20,objSelRigidB.velocity.magnitude);   
-            if (vdist.magnitude < deltaDistance)
-            {
-                objSelRigidB.velocity /= 2;
-            }
+            HandleObject();
         }
     }
 
@@ -40,33 +33,58 @@ public class GravityGunController : MonoBehaviour
         rayOrigin = Camera.main.transform.position;
         rayDirection = Camera.main.transform.forward;
 
-        Debug.DrawLine(rayOrigin, rayOrigin + rayDirection * 100, Color.red);
-        
-        if (Input.GetKey(KeyCode.F))
-        {
-            Debug.Log("TODO : Throw");
-        }
+        //Debug.DrawLine(rayOrigin, rayOrigin + rayDirection * 100, Color.red);
 
         if (selected && Input.GetMouseButtonDown(0)) {
-            
             if (!objectHold)
             {
-                bool touchedSomething = Physics.Raycast(rayOrigin, rayDirection, out shootingRaycast);
-                if (touchedSomething && !objectHold)
-                {
-                    Rigidbody objectTouchedRB = shootingRaycast.collider.GetComponent<Rigidbody>();
-                    if (objectTouchedRB)
-                    {
-                        objectHold = true;
-                        objSelRigidB = objectTouchedRB;
-                    }
-                }
+                PickUpObject();
             } else {
-                Debug.Log("PUSH !");
-                objSelRigidB.AddForce(Camera.main.transform.forward * pushForce, ForceMode.Impulse);
-                objSelRigidB = null;
-                objectHold = false;
+                ThrowObject();
             }
         }    
+    }
+
+    private void PickUpObject()
+    {
+        bool touchedSomething = Physics.Raycast(rayOrigin, rayDirection, out shootingRaycast);
+        if (touchedSomething && !objectHold)
+        {
+            Rigidbody objectTouchedRB = shootingRaycast.collider.GetComponent<Rigidbody>();
+            if (objectTouchedRB)
+            {
+                objectHold = true;
+                objSelRigidB = objectTouchedRB;
+            }
+        }
+    }
+
+    private void ThrowObject()
+    {
+        objSelRigidB.AddForce(Camera.main.transform.forward * pushForce, ForceMode.Impulse);
+        objSelRigidB = null;
+        objectHold = false;
+    }
+
+    private void HandleObject()
+    {
+        objSelCoordToTendTo = Camera.main.transform.position + Camera.main.transform.forward * 5;
+        Vector3 vdist = objSelCoordToTendTo - objSelRigidB.transform.position;
+        objSelRigidB.AddForce(vdist * 20 * objSelRigidB.mass);
+        objSelRigidB.velocity = vdist.normalized * Mathf.Min(20, objSelRigidB.velocity.magnitude);
+        if (vdist.magnitude < deltaDistance)
+        {
+            objSelRigidB.velocity /= 2;
+        }
+    }
+
+    public new void OnSlotItemInstantiation()
+    {
+
+    }
+
+    public new void OnSlotItemDestroy()
+    {
+
     }
 }
