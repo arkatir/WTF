@@ -87,8 +87,15 @@ public class ObjectPoolManager : MonoBehaviour
 
     public void RemoveObject(GameObject obj)
     {
-        obj.SetActive(false);
-        obj.transform.position = storageTransform.position;
+        if (pooledObjects.Contains(obj))
+        {
+            obj.SetActive(false);
+            obj.transform.position = storageTransform.position;
+        }
+        else
+        {
+            Destroy(obj);
+        }
     }
     #endregion
 

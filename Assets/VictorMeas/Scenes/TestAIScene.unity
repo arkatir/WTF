@@ -133,7 +133,7 @@ GameObject:
   m_Component:
   - component: {fileID: 257421941}
   - component: {fileID: 257421942}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: ShootingOrigin
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -177,6 +177,14 @@ PrefabInstance:
     - target: {fileID: 2061519649705130469, guid: a89fb4cec4d3fcf4a9512e975f48fb9a, type: 3}
       propertyPath: m_Name
       value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 2061519649705130469, guid: a89fb4cec4d3fcf4a9512e975f48fb9a, type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 2061519649705130471, guid: a89fb4cec4d3fcf4a9512e975f48fb9a, type: 3}
+      propertyPath: m_Layer
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 2061519649705485761, guid: a89fb4cec4d3fcf4a9512e975f48fb9a, type: 3}
       propertyPath: m_LocalPosition.x
@@ -966,5 +974,9 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 9094898857732087071, guid: cf3c8bae49f10124fbc78d0211ce5306, type: 3}
+      propertyPath: objectToPool
+      value: 
+      objectReference: {fileID: 1320716786197715938, guid: e99c7e28065bf1b4bb7b3f935613099d, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cf3c8bae49f10124fbc78d0211ce5306, type: 3}
