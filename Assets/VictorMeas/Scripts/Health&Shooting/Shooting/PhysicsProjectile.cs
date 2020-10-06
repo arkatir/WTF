@@ -21,14 +21,17 @@ public class PhysicsProjectile : MonoBehaviour
     void Start()
     {
         rb = this.GetComponent<Rigidbody>();
+        //rb.isKinematic = true;
     }
 
     private void OnEnable()
     {
-        if (rb)
+        if (rb || (rb = this.GetComponent<Rigidbody>()))
         {
+            rb.isKinematic = false;
+            rb.velocity = Vector3.zero;
             Vector3 directionalForce = Vector3.zero + transform.forward*startingForce;
-            rb.AddForce(directionalForce);
+            rb.AddForce(directionalForce, ForceMode.Impulse);
         }
         StartCoroutine(CountdownToDeactivate());
     }
@@ -89,6 +92,7 @@ public class PhysicsProjectile : MonoBehaviour
                 default:
                 break;
         }
+        //rb.isKinematic = true;
         ObjectPoolManager.managerInstance.RemoveObject(this.gameObject);
         StopAllCoroutines();
     }
@@ -100,6 +104,7 @@ public class PhysicsProjectile : MonoBehaviour
     private IEnumerator CountdownToDeactivate()
     {
         yield return new WaitForSeconds(timeToDeactivate);
+        //rb.isKinematic = true;
         ObjectPoolManager.managerInstance.RemoveObject(this.gameObject);
         yield return null;
     }

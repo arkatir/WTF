@@ -167,7 +167,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e3e9a35c044fb1b4d9f2f53bc47eb17c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startingForce: 300
+  startingForce: 40
   damage: 10
   targetToHit: 1
   hitPrefab: {fileID: 0}
