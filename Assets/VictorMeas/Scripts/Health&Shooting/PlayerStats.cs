@@ -32,6 +32,17 @@ public class PlayerStats : MonoBehaviour
         }
     }
 
+    public int GetHealth()
+    {
+        return health;
+    }
+
+    public int SetHealth(int val)
+    {
+        health = val;
+        return health;
+    }
+
     // Update is called once per frame
     void Update()
     {
