@@ -10,26 +10,47 @@ public class SlotsManager : MonoBehaviour
     public void PickUpSlotItem(SlotItem go)
     {
         int newSlotIndex = go.slotIndex;
-        if (slotItemList[newSlotIndex])
+        Debug.Log("newSlotIndex " + newSlotIndex);
+        if (newSlotIndex < 3)
         {
-            slotItemList[newSlotIndex].OnSlotItemDestroy();
-        }
+            if (slotItemList[newSlotIndex])
+                slotItemList[newSlotIndex].OnRemove();
 
-        slotItemList[newSlotIndex].OnSlotItemInstantiation();
+            slotItemList[newSlotIndex] = go;
+            slotItemList[newSlotIndex].OnInsert();
+        }
     }
 
-    void OnUpdate()
+    void Start()
+    {
+        slotItemList = new SlotItem[3];
+    }
+
+    void Update()
     {
         if (Input.GetKey(KeyCode.Alpha1))
-            slotItemList[1].OnSlotItemDestroy();
+            slotItemList[0].OnRemove();
 
         if (Input.GetKey(KeyCode.Alpha2))
-            slotItemList[2].OnSlotItemDestroy();
+            slotItemList[1].OnRemove();
+
+        if (Input.GetKey(KeyCode.Alpha3))
+            slotItemList[2].OnRemove();
     }
-    public void OnTriggerEnter(Collider other)
+
+    void OnTriggerEnter(Collider other)
     {
         SlotItem s = other.GetComponent<SlotItem>();
         if(s != null)
+        {
+            PickUpSlotItem(s);
+        }
+    }
+
+    void OnCollisionEnter(Collision coll)
+    {
+        SlotItem s = coll.transform.GetComponent<SlotItem>();
+        if (s != null)
         {
             PickUpSlotItem(s);
         }
