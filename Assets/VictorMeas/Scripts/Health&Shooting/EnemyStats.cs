@@ -2,7 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerStats : MonoBehaviour
+/// <summary>
+/// Health manager for enemies.
+/// </summary>
+public class EnemyStats : MonoBehaviour
 {
     // Start is called before the first frame update
     [SerializeField]
@@ -11,7 +14,7 @@ public class PlayerStats : MonoBehaviour
     private int health;
     void Start()
     {
-        
+
     }
 
     public void AddHealth(int val)
@@ -25,6 +28,7 @@ public class PlayerStats : MonoBehaviour
         if (removedVal < 0)
         {
             health = 0;
+            ObjectPoolManager.managerInstance.RemoveObject(this.gameObject); //Sets enemy inactive on health to 0
         }
         else
         {
@@ -46,6 +50,6 @@ public class PlayerStats : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 }
