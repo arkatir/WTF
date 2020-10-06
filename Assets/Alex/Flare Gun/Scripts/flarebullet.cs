@@ -15,6 +15,8 @@ public class flarebullet : MonoBehaviour
     public Transform Player;
     public float space;
     private bool teleport = true;
+    public Object marker;
+
 
     // Use this for initialization
     void Start()
@@ -71,27 +73,25 @@ public class flarebullet : MonoBehaviour
 
         bool enoughspace = false;
 
-       if (collision.contacts[0].point.y > 0)
+  
+        if (Physics.CheckCapsule(collision.contacts[0].point + (collision.contacts[0].normal * 0.6f), collision.contacts[0].point + (collision.contacts[0].normal * .6f) + Vector3.up*1.6f, 0.5f) == true)
         {
-
-            if (Physics.CheckCapsule(collision.contacts[0].point + (collision.contacts[0].normal * 0.65f), collision.contacts[0].point + (collision.contacts[0].normal * 0.65f), 0.5f) == false)
-            {
-                    enoughspace = true;
-            }
+           enoughspace = true;
         }
-        else
-        {
-            enoughspace = true;
-        }
-
+        
+    
         if (teleport && enoughspace)
         {
 
-            teleport = false;
-            Player.position = collision.contacts[0].point + (collision.contacts[0].normal * 3f);
+           
+            Player.position = collision.contacts[0].point + (collision.contacts[0].normal * .6f);
 
         }
-      
+       teleport = false;
     }
+
+
+
+
 }
 
