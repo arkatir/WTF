@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class FishAlone : MonoBehaviour
 {
-    public float speed = 0;
-    public float rotationSpeed = 0;
+    float speed;
+    float startSpeed;
+    float rotationSpeed = 1;
 
     public GameObject[] flock;
     GameObject[] noticedNeighbour;
@@ -18,7 +19,8 @@ public class FishAlone : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        speed = Random.Range(0.6f, 1f);
+        startSpeed = Random.Range(0.8f, 1.0f);
+        speed = startSpeed;
         noticedNeighbour = new GameObject[noticedNeighbourNumber];
     }
 
@@ -26,11 +28,9 @@ public class FishAlone : MonoBehaviour
     void Update()
     {
         //Voir si on ajoute du random
-        if(Random.Range(0,5) < 1) 
+        if(Random.Range(0,4) < 1) 
         {
-           //Apply rules
            ApplyRules();
-
         }
         transform.position += transform.forward * speed * Time.deltaTime;
     }
@@ -72,6 +72,9 @@ public class FishAlone : MonoBehaviour
         groupSpeed = groupSpeed / noticedNeighbourNumber;
 
         Vector3 direction = averagePosition - this.transform.position;
+        float diffDir = Quaternion.Dot(transform.rotation, Quaternion.LookRotation(direction));
+        this.speed = 0.5f + Mathf.Abs(diffDir * startSpeed);
+        this.rotationSpeed = this.speed;
         if (direction!= Vector3.zero)
         {
             this.transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(direction), rotationSpeed * Time.deltaTime);
