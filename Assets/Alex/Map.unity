@@ -97,7 +97,7 @@ LightmapSettings:
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
-  m_LightingDataAsset: {fileID: 112000000, guid: d07b5dcba673fff448c1930fd980f527, type: 2}
+  m_LightingDataAsset: {fileID: 112000000, guid: 2c04339c0e5391e4cbade44df5e95246, type: 2}
   m_LightingSettings: {fileID: 4890085278179872738, guid: 70286cc159f3272469666a372fb24b80, type: 2}
 --- !u!196 &4
 NavMeshSettings:
@@ -357,6 +357,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2061519649710447235, guid: a89fb4cec4d3fcf4a9512e975f48fb9a, type: 3}
+      propertyPath: m_Mass
+      value: 10
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a89fb4cec4d3fcf4a9512e975f48fb9a, type: 3}
 --- !u!1001 &634121134
@@ -369,6 +373,18 @@ PrefabInstance:
     - target: {fileID: 149686653163026206, guid: e18b3ff892ea36b44bc61779d52b7f5d, type: 3}
       propertyPath: pushForce
       value: 500
+      objectReference: {fileID: 0}
+    - target: {fileID: 149686653163026206, guid: e18b3ff892ea36b44bc61779d52b7f5d, type: 3}
+      propertyPath: objectHoldDragSpeed
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 149686653163026206, guid: e18b3ff892ea36b44bc61779d52b7f5d, type: 3}
+      propertyPath: objectHoldMinDistance
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 149686653163026206, guid: e18b3ff892ea36b44bc61779d52b7f5d, type: 3}
+      propertyPath: throwWeaponForce
+      value: 150
       objectReference: {fileID: 0}
     - target: {fileID: 149686653757906560, guid: e18b3ff892ea36b44bc61779d52b7f5d, type: 3}
       propertyPath: m_Name
@@ -417,6 +433,10 @@ PrefabInstance:
     - target: {fileID: 149686653757997728, guid: e18b3ff892ea36b44bc61779d52b7f5d, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 90
+      objectReference: {fileID: 0}
+    - target: {fileID: 5074270868105274489, guid: e18b3ff892ea36b44bc61779d52b7f5d, type: 3}
+      propertyPath: m_Mass
+      value: 30
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e18b3ff892ea36b44bc61779d52b7f5d, type: 3}
@@ -576,7 +596,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6409620923642243009, guid: de9d2e9a9cf2f89418a237a7a186b504, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.329
+      value: 0.01
       objectReference: {fileID: 0}
     - target: {fileID: 6409620923642243009, guid: de9d2e9a9cf2f89418a237a7a186b504, type: 3}
       propertyPath: m_LocalPosition.z
@@ -1426,8 +1446,8 @@ Light:
   serializedVersion: 10
   m_Type: 1
   m_Shape: 0
-  m_Color: {r: 1, g: 0.99835116, b: 0.6264151, a: 1}
-  m_Intensity: 3000000
+  m_Color: {r: 1, g: 0.99835116, b: 1, a: 1}
+  m_Intensity: 50000
   m_Range: 10
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.802082
@@ -1510,7 +1530,7 @@ MonoBehaviour:
   m_PointlightHDType: 0
   m_SpotLightShape: 0
   m_AreaLightShape: 0
-  m_Intensity: 3000000
+  m_Intensity: 50000
   m_EnableSpotReflector: 0
   m_LuxAtDistance: 1
   m_InnerSpotPercent: 0
