@@ -14,6 +14,9 @@ public class GravityGunController : SlotItem
     public float xRotationToPlayer = -14.127f;
     public float yRotationToPlayer = -20.579f;
     public Vector3 positionToPlayer = new Vector3(0.9f, -1.1f, 1.3f);
+    public float objectHoldInitialDistance = 5f;
+    public float objectHoldMinDistance = 2f;
+    public float objectHoldDragSpeed = 1f;
 
     private bool selected = false;
     private RaycastHit shootingRaycast;
@@ -22,17 +25,17 @@ public class GravityGunController : SlotItem
     private bool objectHold = false;
     private Vector3 objSelCoordToTendTo;
     private Quaternion rotationToPlayer;
+    private float objectHoldDistance;
 
     private void Start()
     {
         rotationToPlayer = Quaternion.Euler(xRotationToPlayer, yRotationToPlayer, 0);
+        objectHoldDistance = objectHoldInitialDistance;
     }
     void FixedUpdate()
     {
         if (objectHold)
-        {
             HandleObject();
-        }
     }
 
     // Update is called once per frame
@@ -43,35 +46,39 @@ public class GravityGunController : SlotItem
 
         //Debug.DrawLine(rayOrigin, rayOrigin + rayDirection * 100, Color.red);
 
-        checkIfObjectHoldStillExists();
+        CheckIfObjectHoldStillExists();
 
         if (objectHold)
+             GenerateBeamShape();
+
+        if (selected && Input.GetMouseButtonDown(0))
         {
-            Vector3 end = particles.transform.InverseTransformPoint(objSelRigidB.transform.position);
-            for (int i = 0;i< particles.positionCount; i++)
-            {
-                float t = (float)i / (float)(particles.positionCount - 1);
-                float t2 = t ;
-                if (t > 0.5)
-                    t2 = 1 - t;
-                Vector3 p = Vector3.Lerp(Vector3.zero, end, t);
-                p.y += Mathf.Sin((Time.time + t) * 3) / 300 * t2 * 2;
-                particles.SetPosition(i, p);
-            }
-            
+            if (!objectHold)
+                PickUpObject();
+            else
+                ThrowObject();
         }
 
-        if (selected && Input.GetMouseButtonDown(0)) {
-            if (!objectHold)
-            {
-                PickUpObject();
-            } else {
-                ThrowObject();
-            }
-        }    
+        if (selected && Input.GetMouseButton(1) && objectHoldDistance > objectHoldMinDistance)
+            objectHoldDistance -= Time.deltaTime * objectHoldDragSpeed;
     }
 
-    private void checkIfObjectHoldStillExists()
+    private void GenerateBeamShape()
+    {
+        Vector3 end = particles.transform.InverseTransformPoint(objSelRigidB.transform.position);
+        for (int i = 0; i < particles.positionCount; i++)
+        {
+            float t = (float)i / (float)(particles.positionCount - 1);
+            float t2 = t;
+            if (t > 0.5)
+                t2 = 1 - t;
+            Vector3 p = Vector3.Lerp(Vector3.zero, end, t);
+            p.y += Mathf.Sin((Time.time + t) * 3) / 300 * t2 * 2;
+            particles.SetPosition(i, p);
+        }
+    }
+
+    private void CheckIfObjectHoldStillExists()
     {
         if (objectHold && objSelRigidB == null)
             DropObject();
@@ -88,6 +95,7 @@ public class GravityGunController : SlotItem
                 objectHold = true;
                 objSelRigidB = objectTouchedRB;
                 particles.gameObject.SetActive(true);
+                objectHoldDistance = objectHoldInitialDistance;
             }
         }
     }
@@ -107,7 +115,7 @@ public class GravityGunController : SlotItem
 
     private void HandleObject()
     {
-        objSelCoordToTendTo = Camera.main.transform.position + Camera.main.transform.forward * 5;
+        SelectedObjectTargetComputation();
         Vector3 vdist = objSelCoordToTendTo - objSelRigidB.transform.position;
         objSelRigidB.AddForce(vdist * 20 * objSelRigidB.mass);
         objSelRigidB.velocity = vdist.normalized * Mathf.Min(20, objSelRigidB.velocity.magnitude);
@@ -115,6 +123,11 @@ public class GravityGunController : SlotItem
         {
             objSelRigidB.velocity /= 2;
         }
+    }
+
+    private void SelectedObjectTargetComputation()
+    {
+        objSelCoordToTendTo = Camera.main.transform.position + Camera.main.transform.forward * objectHoldDistance;
     }
 
     public override void OnInsert()
