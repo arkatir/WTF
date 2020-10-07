@@ -472,6 +472,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 149686653163026206, guid: e18b3ff892ea36b44bc61779d52b7f5d, type: 3}
+      propertyPath: objectHoldMinDistance
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 149686653163026206, guid: e18b3ff892ea36b44bc61779d52b7f5d, type: 3}
+      propertyPath: objectHoldDragSpeed
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 149686653163026206, guid: e18b3ff892ea36b44bc61779d52b7f5d, type: 3}
+      propertyPath: objectHoldInitialDistance
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 149686653757906560, guid: e18b3ff892ea36b44bc61779d52b7f5d, type: 3}
       propertyPath: m_Name
       value: GravityGun

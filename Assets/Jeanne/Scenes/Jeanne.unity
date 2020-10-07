@@ -430,6 +430,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 522698598, guid: de9d2e9a9cf2f89418a237a7a186b504, type: 3}
+      propertyPath: m_Constraints
+      value: 80
+      objectReference: {fileID: 0}
     - target: {fileID: 6032673859347103099, guid: de9d2e9a9cf2f89418a237a7a186b504, type: 3}
       propertyPath: m_Name
       value: Unicorn
@@ -440,7 +444,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6409620923642243009, guid: de9d2e9a9cf2f89418a237a7a186b504, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0
+      value: 1.14
       objectReference: {fileID: 0}
     - target: {fileID: 6409620923642243009, guid: de9d2e9a9cf2f89418a237a7a186b504, type: 3}
       propertyPath: m_LocalPosition.z

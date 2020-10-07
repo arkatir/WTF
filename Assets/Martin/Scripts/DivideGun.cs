@@ -51,7 +51,7 @@ public class DivideGun : SlotItem
     {
         _held = false;
         GetComponentInChildren<MeshRenderer>().sharedMaterial = groundMaterial;
-        Vector3 newPos = transform.parent.position + 3 * transform.parent.forward;
+        Vector3 newPos = transform.parent.position + 10 * transform.parent.forward;
         transform.SetParent(null);        
         transform.position = new Vector3(newPos.x, 1, newPos.z);
         transform.localRotation = Quaternion.identity;
