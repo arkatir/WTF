@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class GravityGunController : SlotItem
 {
-    public float floatingForce = 1f;
+    public float floatingForce = 23f;
     public Rigidbody objSelRigidB;
-    public float floatingPushInterval = 1;
-    public float floatingMass = 0.1f;
-    public float pushForce = 100f;
+    public LineRenderer particles;
+    public float pushForce = 15f;
+    public float throwWeaponForce = 10f;
     public float deltaDistance = 1f;
     public float xRotationToPlayer = -14.127f;
     public float yRotationToPlayer = -20.579f;
@@ -42,6 +42,22 @@ public class GravityGunController : SlotItem
 
         Debug.DrawLine(rayOrigin, rayOrigin + rayDirection * 100, Color.red);
 
+        if (objectHold)
+        {
+            Vector3 end = particles.transform.InverseTransformPoint(objSelRigidB.transform.position);
+            for (int i = 0;i< particles.positionCount; i++)
+            {
+                float t = (float)i / (float)(particles.positionCount - 1);
+                float t2 = t ;
+                if (t > 0.5)
+                    t2 = 1 - t;
+                Vector3 p = Vector3.Lerp(Vector3.zero, end, t);
+                p.y += Mathf.Sin((Time.time + t) * 3) / 300 * t2 * 2;
+                particles.SetPosition(i, p);
+            }
+            
+        }
+
         if (selected && Input.GetMouseButtonDown(0)) {
             if (!objectHold)
             {
@@ -62,6 +78,7 @@ public class GravityGunController : SlotItem
             {
                 objectHold = true;
                 objSelRigidB = objectTouchedRB;
+                particles.gameObject.SetActive(true);
             }
         }
     }
@@ -71,6 +88,7 @@ public class GravityGunController : SlotItem
         objSelRigidB.AddForce(Camera.main.transform.forward * pushForce, ForceMode.Impulse);
         objSelRigidB = null;
         objectHold = false;
+        particles.gameObject.SetActive(false);
     }
 
     private void HandleObject()
@@ -102,6 +120,6 @@ public class GravityGunController : SlotItem
         transform.SetParent(null);
         GetComponent<Rigidbody>().isKinematic = false;
         GetComponent<MeshCollider>().enabled = true;
-        GetComponent<Rigidbody>().AddForce(Camera.main.transform.forward, ForceMode.Impulse);
+        GetComponent<Rigidbody>().AddForce(Camera.main.transform.forward * throwWeaponForce, ForceMode.Impulse);
     }
 }

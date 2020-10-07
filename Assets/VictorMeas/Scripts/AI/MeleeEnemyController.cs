@@ -12,6 +12,7 @@ public class MeleeEnemyController : MonoBehaviour
     private float chosenMaxTime;
     private float maxNavSpeed;
     private float currentAttackTime;
+    private string attackProjectileName;
     //For speed intake
     private Vector3 lastSavedPosition;
     #endregion
@@ -21,8 +22,9 @@ public class MeleeEnemyController : MonoBehaviour
     public float maxRadiusPoint;
     public float attackDistance;
     public float attackCooldown;
-    public bool isPursuing;
-    public bool isDying;
+    public GameObject attackProjectilePrefab;
+    public bool isPursuing = false;
+    public bool isDying = false;
     [Header("Animation")]
     public Animator enemyAnimator;
     [Header("Detection")]
@@ -45,6 +47,7 @@ public class MeleeEnemyController : MonoBehaviour
         lastSavedPosition = transform.position;
         currentTime = 0f;
         maxNavSpeed = nav.speed;
+        attackProjectileName = attackProjectilePrefab.name;
     }
 
     // Update is called once per frame
@@ -55,11 +58,11 @@ public class MeleeEnemyController : MonoBehaviour
             CheckMovement();
             TransmitInfoToAnimator();
         }
-        if(enemyDetector.isDetected = true && !isPursuing)
+        if(enemyDetector.isDetected == true && !isPursuing)
         {
             isPursuing = true;
         }
-        else
+        else if (enemyDetector.isDetected == false && isPursuing)
         {
             isPursuing = false;
         }
@@ -84,12 +87,13 @@ public class MeleeEnemyController : MonoBehaviour
         }
         else //Pursuing
         {
-            if (((this.transform.position - enemyDetector.lastSavedPosition).magnitude < attackDistance) && (currentAttackTime >= attackCooldown))
+            float distanceToPlayer = (this.transform.position - enemyDetector.lastSavedPosition).magnitude;
+            if ((distanceToPlayer < attackDistance) && (currentAttackTime >= attackCooldown))
             {
                 Attack();
                 currentAttackTime = 0f; //To not attack all the time
             }
-            else
+            else if (distanceToPlayer > attackDistance)
             {
                 nav.SetDestination(enemyDetector.lastSavedPosition);
             }
@@ -99,6 +103,7 @@ public class MeleeEnemyController : MonoBehaviour
     public void Attack()
     {
         enemyAnimator.SetTrigger("Attack");
+        ObjectPoolManager.managerInstance.CreateObject(attackProjectileName, transform.position, transform.rotation);
         //Spawn un "projectile" immobile trigger qui peut faire des degats au joueur on trigger enter
     }
 
