@@ -25,8 +25,11 @@ public class WallGun : SlotItem
             {
                 if (Time.time >= _lastShot + minIntervalBetweenShots)
                 {
-                    ObjectPoolManager.managerInstance.CreateObject(projectileName, transform.parent.position + transform.parent.forward * distance + Vector3.up * 2, Quaternion.identity);
-                    _lastShot = Time.time;
+                    if (Physics.Raycast(transform.parent.position, transform.parent.forward, out RaycastHit hitInfo))
+                    {
+                        ObjectPoolManager.managerInstance.CreateObject(projectileName, hitInfo.point + Vector3.up * 2, Quaternion.identity);
+                        _lastShot = Time.time;
+                    }
                 }
             }
         }
