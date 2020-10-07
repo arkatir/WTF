@@ -94,5 +94,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77ab90e303f8e8f42a668f6e9c06c313, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerDistance: 10
   flock: []
+  noticedNeighbour: []
+  player: {fileID: 2061519649705130469, guid: a89fb4cec4d3fcf4a9512e975f48fb9a, type: 3}
   noticedNeighbourNumber: 4
