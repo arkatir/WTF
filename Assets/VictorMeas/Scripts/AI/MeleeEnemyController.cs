@@ -11,7 +11,8 @@ public class MeleeEnemyController : MonoBehaviour
     private float currentTime;
     private float chosenMaxTime;
     private float maxNavSpeed;
-
+    private float currentAttackTime;
+    private string attackProjectileName;
     //For speed intake
     private Vector3 lastSavedPosition;
     #endregion
@@ -19,10 +20,15 @@ public class MeleeEnemyController : MonoBehaviour
     public NavMeshAgent nav;
     public float maxRoamTime;
     public float maxRadiusPoint;
-    public bool isPursuing;
-    public bool isDying;
+    public float attackDistance;
+    public float attackCooldown;
+    public GameObject attackProjectilePrefab;
+    public bool isPursuing = false;
+    public bool isDying = false;
     [Header("Animation")]
     public Animator enemyAnimator;
+    [Header("Detection")]
+    public EnemyDetection enemyDetector;
     #endregion
 
     // Start is called before the first frame update
@@ -34,11 +40,14 @@ public class MeleeEnemyController : MonoBehaviour
     public void InitializeState()
     {
         nav = this.GetComponent<NavMeshAgent>();
+        nav.isStopped = false;
+        this.GetComponent<Rigidbody>().isKinematic = true;
         isPursuing = false;
         isDying = false;
         lastSavedPosition = transform.position;
         currentTime = 0f;
         maxNavSpeed = nav.speed;
+        attackProjectileName = attackProjectilePrefab.name;
     }
 
     // Update is called once per frame
@@ -49,18 +58,26 @@ public class MeleeEnemyController : MonoBehaviour
             CheckMovement();
             TransmitInfoToAnimator();
         }
+        if(enemyDetector.isDetected == true && !isPursuing)
+        {
+            isPursuing = true;
+        }
+        else if (enemyDetector.isDetected == false && isPursuing)
+        {
+            isPursuing = false;
+        }
     }
 
     public void CheckMovement()
     {
-        if (!isPursuing)
+        currentAttackTime += Time.deltaTime;
+        if (!isPursuing) //Roaming
         {
             if(currentTime >= chosenMaxTime)
             {
                 nav.SetDestination(GetRandomPoint(transform.position, maxRadiusPoint));
                 currentTime = 0f;
                 chosenMaxTime = Random.Range(4f, maxRoamTime);
-                Debug.Log("new max chosen time is: " + chosenMaxTime.ToString()); 
                 return;
             }
             else
@@ -68,15 +85,32 @@ public class MeleeEnemyController : MonoBehaviour
                 currentTime += Time.deltaTime;
             }
         }
+        else //Pursuing
+        {
+            float distanceToPlayer = (this.transform.position - enemyDetector.lastSavedPosition).magnitude;
+            if ((distanceToPlayer < attackDistance) && (currentAttackTime >= attackCooldown))
+            {
+                Attack();
+                currentAttackTime = 0f; //To not attack all the time
+            }
+            else if (distanceToPlayer > attackDistance)
+            {
+                nav.SetDestination(enemyDetector.lastSavedPosition);
+            }
+        }
     }
 
-
+    public void Attack()
+    {
+        enemyAnimator.SetTrigger("Attack");
+        ObjectPoolManager.managerInstance.CreateObject(attackProjectileName, transform.position, transform.rotation);
+        //Spawn un "projectile" immobile trigger qui peut faire des degats au joueur on trigger enter
+    }
 
     public void TransmitInfoToAnimator()
     {
-        float currentSpeed = (transform.position - lastSavedPosition).magnitude ;
-        lastSavedPosition = transform.position;
-        enemyAnimator.SetFloat("Speed", Vector3.Distance(nav.desiredVelocity, new Vector3(0, 0, 0)));
+        float currentSpeed = nav.velocity.magnitude; //(transform.position - lastSavedPosition).magnitude ;
+        enemyAnimator.SetFloat("Speed", currentSpeed/maxNavSpeed);
     }
 
     public static Vector3 GetRandomPoint(Vector3 center, float maxDistance)
