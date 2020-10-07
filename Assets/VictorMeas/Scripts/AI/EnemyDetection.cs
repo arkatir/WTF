@@ -32,7 +32,7 @@ public class EnemyDetection : MonoBehaviour
         if (other.gameObject.layer == LayerMask.NameToLayer("Player"))
         {
             isDetected = true;
-            lastSavedPosition = other.transform.position;
+            lastSavedPosition = other.transform.position - (transform.forward * 0.5f); //So our mob doesnt try to jitter onto the player's face
         }
     }
 

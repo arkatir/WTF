@@ -84,8 +84,7 @@ public class EnemyStats : MonoBehaviour
             var m_CurrentClipInfo = m_EnemyAnimator.GetCurrentAnimatorClipInfo(0);
             //Access the current length of the clip
             var m_CurrentClipLength = m_CurrentClipInfo[0].clip.length;
-            Debug.Log("time of death is: " + m_CurrentClipLength.ToString());
-            yield return new WaitForSeconds(m_CurrentClipLength + 2f); //Wait for end of clip before removing enemy GameObject
+            yield return new WaitForSeconds(m_CurrentClipLength + 3f); //Wait for end of clip before removing enemy GameObject
         }
         ObjectPoolManager.managerInstance.RemoveObject(this.gameObject);
         yield return null;
