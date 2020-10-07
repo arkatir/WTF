@@ -7,29 +7,40 @@ public class SlotsManager : MonoBehaviour
     // Ce script est a attacher au joueur pour activer le fonctionnement des slots, aucun code n'est à ajouter ici
 
     public SlotItem[] slotItemList;
+    public float coolDownTimeInSeconds = 5f;
+
+    private float coolDownTimer;
     // Start is called before the first frame update
 
     public void PickUpSlotItem(SlotItem go)
     {
-        int newSlotIndex = go.slotIndex;
-        Debug.Log("newSlotIndex " + newSlotIndex);
-        if (newSlotIndex < 3)
+        if (coolDownTimer <= 0)
         {
-            if (slotItemList[newSlotIndex] != null)
-                slotItemList[newSlotIndex].OnRemove();
+            coolDownTimer = coolDownTimeInSeconds;
+            int newSlotIndex = go.slotIndex;
+            Debug.Log("newSlotIndex " + newSlotIndex);
+            if (newSlotIndex < 3)
+            {
+                if (slotItemList[newSlotIndex] != null)
+                    slotItemList[newSlotIndex].OnRemove();
 
-            slotItemList[newSlotIndex] = go;
-            slotItemList[newSlotIndex].OnInsert();
+                slotItemList[newSlotIndex] = go;
+                slotItemList[newSlotIndex].OnInsert();
+            }
         }
     }
 
     void Start()
     {
         slotItemList = new SlotItem[3];
+        coolDownTimer = 0;
     }
 
     void Update()
     {
+        if (coolDownTimer > 0)
+            coolDownTimer -= Time.deltaTime;
+
         if (Input.GetKey(KeyCode.Alpha1) && slotItemList[0] != null)
         {
             slotItemList[0].OnRemove();

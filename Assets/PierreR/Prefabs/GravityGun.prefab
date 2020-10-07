@@ -111,7 +111,6 @@ MonoBehaviour:
   objectHoldInitialDistance: 5
   objectHoldMinDistance: 3
   objectHoldDragSpeed: 6
-  objectHoldDistance: 0
 --- !u!114 &7393828397118514406
 MonoBehaviour:
   m_ObjectHideFlags: 0

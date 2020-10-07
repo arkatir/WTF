@@ -339,6 +339,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slotItemList: []
+  coolDownTimeInSeconds: 0.3
 --- !u!114 &2760521847114332154
 MonoBehaviour:
   m_ObjectHideFlags: 0
