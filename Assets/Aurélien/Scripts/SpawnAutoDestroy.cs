@@ -14,7 +14,7 @@ public class SpawnAutoDestroy : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        spawnPos.transform.position = transform.position;
     }
 
     // Update is called once per frame
@@ -30,15 +30,15 @@ public class SpawnAutoDestroy : MonoBehaviour
         {
             float spawnRadius = (spawnNumber - 1) / 2;
             float spawnAngle = (360) / spawnNumber;
-            spawnPos.transform.position = new Vector3(spawnRadius, 0, 0);
-            for (int i = 0; i < spawnNumber; i++)
+            spawnPos.transform.position = new Vector3(spawnRadius, 0, 0) + transform.position;
+            for (int i = 0; i < Mathf.Min(spawnNumber, 10); i++)
             {
                 GameObject spawn = Instantiate(autoDestroyPrefab, spawnPos.transform.position + spawnOffset, autoDestroyPrefab.transform.rotation);
                 autoDestroy = spawn.GetComponent<AutoDestroy>();
                 autoDestroy.target = other.gameObject;
                 autoDestroy.speedCap = 2 * Mathf.Sqrt(spawnNumber);
                 autoDestroy.timer = Random.Range(2.5f, 3.5f);
-                spawnPos.transform.RotateAround(Vector3.zero, Vector3.up, spawnAngle);
+                spawnPos.transform.RotateAround(transform.position, Vector3.up, spawnAngle);
             }
             spawnNumber++;
             transform.localScale *= 1.2f;
@@ -50,7 +50,7 @@ public class SpawnAutoDestroy : MonoBehaviour
     IEnumerator Deactivate()
     {
         active = false;
-        yield return new WaitForSeconds(3);
+        yield return new WaitForSeconds(5);
         active = true;
     }
 }
