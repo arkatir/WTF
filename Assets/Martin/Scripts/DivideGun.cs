@@ -43,8 +43,8 @@ public class DivideGun : SlotItem
         _held = true;
         GetComponentInChildren<MeshRenderer>().sharedMaterial = defaultMaterial;
         transform.SetParent(Player.Get().GetComponentInChildren<Camera>().transform);
-        transform.localPosition = Vector3.zero;
-        transform.localRotation = Quaternion.identity;
+        transform.localPosition = -0.5f * Vector3.up;
+        transform.localRotation = Quaternion.AngleAxis(-10f, Vector3.right);
     }
 
     public override void OnRemove()
@@ -54,5 +54,6 @@ public class DivideGun : SlotItem
         Vector3 newPos = transform.parent.position + 3 * transform.parent.forward;
         transform.SetParent(null);        
         transform.localPosition = new Vector3(newPos.x, 1, newPos.z);
+        transform.localRotation = Quaternion.identity;
     }
 }
