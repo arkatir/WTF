@@ -466,6 +466,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   nonDamageAlpha: 0
   damagedAlpha: 60
+  fadeTime: 1.5
   imageToAffect: {fileID: 1953301021}
 --- !u!1 &1276174994
 GameObject:
