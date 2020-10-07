@@ -25,7 +25,6 @@ public class SpawnAutoDestroy : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
-        Debug.Log("collide");
         if (other.CompareTag("Player") && active)
         {
             float spawnRadius = (spawnNumber - 1) / 2;
