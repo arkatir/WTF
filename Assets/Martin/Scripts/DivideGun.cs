@@ -27,7 +27,7 @@ public class DivideGun : SlotItem
             {
                 if (Time.time >= _lastShot + minIntervalBetweenShots)
                 {
-                    ObjectPoolManager.managerInstance.CreateObject(projectileName, transform.position, transform.rotation);
+                    ObjectPoolManager.managerInstance.CreateObject(projectileName, transform.parent.position, transform.parent.rotation);
                     _lastShot = Time.time;
                 }
             }
@@ -53,7 +53,7 @@ public class DivideGun : SlotItem
         GetComponentInChildren<MeshRenderer>().sharedMaterial = groundMaterial;
         Vector3 newPos = transform.parent.position + 3 * transform.parent.forward;
         transform.SetParent(null);        
-        transform.localPosition = new Vector3(newPos.x, 1, newPos.z);
+        transform.position = new Vector3(newPos.x, 1, newPos.z);
         transform.localRotation = Quaternion.identity;
     }
 }
