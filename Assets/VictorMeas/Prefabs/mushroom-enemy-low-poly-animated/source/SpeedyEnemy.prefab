@@ -69,7 +69,7 @@ Animator:
   m_GameObject: {fileID: 1816132691584266344}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 32b32457f7628ff4fa368907a705c0f8, type: 2}
+  m_Controller: {fileID: 9100000, guid: 892cb1613707d43498463ac09c1dc391, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -93,7 +93,7 @@ GameObject:
   - component: {fileID: 2625507619696003938}
   - component: {fileID: 8949877290906531587}
   m_Layer: 11
-  m_Name: BasicEnemy
+  m_Name: SpeedyEnemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -139,10 +139,10 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5
-  m_Speed: 3
-  m_Acceleration: 8
+  m_Speed: 10
+  m_Acceleration: 10
   avoidancePriority: 50
-  m_AngularSpeed: 400
+  m_AngularSpeed: 600
   m_StoppingDistance: 0
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
@@ -217,6 +217,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 11
       objectReference: {fileID: 0}
+    - target: {fileID: -8740488222763973657, guid: 12783929bbaccbf4d8c8e7a66cc8d3b1, type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 2100000, guid: 4d5a7c9251646bf4fae5f069431e02e9, type: 2}
     - target: {fileID: -8679921383154817045, guid: 12783929bbaccbf4d8c8e7a66cc8d3b1, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.016658

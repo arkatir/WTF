@@ -44,7 +44,6 @@ public class DamageCameraEffect : MonoBehaviour
     {
         Color currentcol = imageToAffect.color;
         currentcol.a = damagedAlpha;
-        Debug.Log("damaged alpha: " + currentcol.a.ToString());
         imageToAffect.color = currentcol;
         StartCoroutine(FadeOut(imageToAffect));
         //StartCoroutine(SlowlyGoBackToNormal(0.1f));
@@ -63,18 +62,4 @@ public class DamageCameraEffect : MonoBehaviour
             image.color = c;
         }
     }
-
-    /*private IEnumerator SlowlyGoBackToNormal(float increment)
-    {
-        float currentAlpha = damagedAlpha - 1;
-        while(currentAlpha > 0)
-        {
-            Color currentcol = imageToAffect.color;
-            currentcol.a = currentAlpha;
-            imageToAffect.color = currentcol;
-            currentAlpha -= 1;
-            yield return new WaitForSeconds(increment);
-        }
-        yield return null;
-    }*/
 }
