@@ -189,7 +189,11 @@ Material:
     - _IridescenceThickness: 1
     - _LinkDetailsWithBase: 1
     - _MaterialID: 1
+<<<<<<< Updated upstream
     - _Metallic: 0.369
+=======
+    - _Metallic: 0
+>>>>>>> Stashed changes
     - _NormalMapSpace: 0
     - _NormalScale: 1
     - _PPDLodThreshold: 5
