@@ -6,8 +6,7 @@ public class Walls : MonoBehaviour
     public float fallingSpeed = 2f;
     public float delayBeforeRelease = 5f;
 
-    // Start is called before the first frame update
-    void Start()
+    private void OnEnable()
     {
         StartCoroutine("FallDown");
     }
@@ -25,6 +24,6 @@ public class Walls : MonoBehaviour
             transform.position = new Vector3(transform.position.x, transform.position.y - Time.deltaTime * fallingSpeed, transform.position.z);
             yield return null;
         }
-        Destroy(gameObject);
+        ObjectPoolManager.managerInstance.RemoveObject(gameObject);
     }
 }

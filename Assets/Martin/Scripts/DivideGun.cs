@@ -4,11 +4,16 @@ public class DivideGun : SlotItem
 {
     public GameObject projectilePrefab;
     public float groundRotationSpeed = 60f;
-    //public float firingRotationSpeed = 270f;
     public float minIntervalBetweenShots = 0.2f;
 
-    private bool _held = true;
+    private bool _held;
     private float _lastShot;
+    private string projectileName;
+
+    public void Start()
+    {
+        projectileName = projectilePrefab.name;
+    }
 
     // Update is called once per frame
     void Update()
@@ -17,10 +22,9 @@ public class DivideGun : SlotItem
         {
             if (Input.GetMouseButton(0))
             {
-                //transform.localRotation = Quaternion.Euler(0, 0, transform.localRotation.eulerAngles.z + Time.deltaTime * firingRotationSpeed);
                 if (Time.time >= _lastShot + minIntervalBetweenShots)
                 {
-                    Instantiate(projectilePrefab, transform.position, transform.rotation);
+                    ObjectPoolManager.managerInstance.CreateObject(projectileName, transform.position, transform.rotation);
                     _lastShot = Time.time;
                 }
             }
@@ -31,11 +35,19 @@ public class DivideGun : SlotItem
         }
     }
 
-    private void OnTriggerEnter(Collider other)
+    public override void OnInsert()
     {
-        if (other.TryGetComponent(out Player player))
-        {
-            Destroy(gameObject);
-        }
+        _held = true;
+        transform.SetParent(Player.Get().GetComponentInChildren<Camera>().transform);
+        transform.localPosition = Vector3.zero;
+        transform.localRotation = Quaternion.identity;
+    }
+
+    public override void OnRemove()
+    {
+        _held = false;
+        Vector3 newPos = transform.parent.position + 3 * transform.parent.forward;
+        transform.SetParent(null);        
+        transform.localPosition = new Vector3(newPos.x, 1, newPos.z);
     }
 }
