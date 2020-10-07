@@ -63,11 +63,11 @@ public class AutoDestroy : MonoBehaviour
         Debug.Log(timer % 1);
         if (timer % 1 < 0.5f)
         {
-            mat.SetColor("_BaseColor", color1);
+            mat.SetColor("_Color", color1);
         }
         else
         {
-            mat.SetColor("_BaseColor", color2);
+            mat.SetColor("_Color", color2);
         }
     }
 
