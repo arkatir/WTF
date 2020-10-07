@@ -58,8 +58,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7804f79232ef2864591263b2f3524dde, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  slotIndex: 0
   projectilePrefab: {fileID: 4150955030609946202, guid: a4b3e2ccb2dd0e54b9202d68a5b7b2c8, type: 3}
-  rotationSpeed: 60
+  groundRotationSpeed: 60
+  minIntervalBetweenShots: 0.2
+  defaultMaterial: {fileID: 2100000, guid: 86c8ee55d9179894ba9998fe03b05d08, type: 2}
+  groundMaterial: {fileID: 2100000, guid: da233e714f89dc2439e2e5a3db474417, type: 2}
 --- !u!1001 &6920958618474473797
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -67,18 +71,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 7685785439722569752}
     m_Modifications:
-    - target: {fileID: -8679921383154817045, guid: 4786a3a0c0db6604695507cc2c514f30, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 4786a3a0c0db6604695507cc2c514f30, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 4786a3a0c0db6604695507cc2c514f30, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 4786a3a0c0db6604695507cc2c514f30, type: 3}
       propertyPath: m_LocalRotation.x
       value: 0

@@ -9,13 +9,19 @@ public class AutoDestroy : MonoBehaviour
     private float explosionForce = 20000.0f;
     private float propulsion = 3000.0f;
     private bool moving = true;
+    private bool exploding = false;
     private Rigidbody rb;
     public float speedCap;
+    public float timer;
+    public Color color1 = new Color(1, 0, 0);
+    public Color color2 = new Color(0, 0, 0);
+    private Material mat;
 
     // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody>();
+        mat = GetComponent<MeshRenderer>().material;
     }
 
     // Update is called once per frame
@@ -24,13 +30,10 @@ public class AutoDestroy : MonoBehaviour
         Vector3 direction = target.transform.position - transform.position;
         if(direction.magnitude < 1.5f)
         {
-            StartCoroutine(WaitExplode());
+            exploding = true;
             moving = false;
             rb.velocity = Vector3.zero;
             rb.isKinematic = true;
-            //PlayerStats playerStats = target.GetComponent<PlayerStats>();
-            //playerStats.RemoveHealth(1);
-            //Destroy(gameObject);
         }
         else if (moving)
         {
@@ -41,12 +44,31 @@ public class AutoDestroy : MonoBehaviour
                 Vector3.Normalize(rb.velocity * speedCap);
             }
         }
+        if (exploding)
+        {
+            WaitExplode();
+        }
     }
 
-    IEnumerator WaitExplode()
+    private void WaitExplode()
     {
-        yield return new WaitForSeconds(Random.Range(2.5f, 3.5f));
-        Explode();
+        if (timer > 0)
+        {
+            timer -= Time.deltaTime;
+        }
+        else
+        {
+            Explode();
+        }
+        Debug.Log(timer % 1);
+        if (timer % 1 < 0.5f)
+        {
+            mat.SetColor("_Color", color1);
+        }
+        else
+        {
+            mat.SetColor("_Color", color2);
+        }
     }
 
     IEnumerator WaitResume()
@@ -79,14 +101,6 @@ public class AutoDestroy : MonoBehaviour
         Destroy(gameObject);
     }
 
-    //private Vector2 Symetric(Vector2 v, Vector2 axis)
-    //{
-    //    float x1 = v.x;
-    //    float y1 = v.y;
-    //    float x2 = axis.x;
-    //    float y2 = axis.y;
-    //    Vector2 u = new Vector2(x1 * x2 * x2 + 2 * y1 * x2 * y2 - x1 * y2 * y2, y1 * y2 * y2 + 2 * x1 * x2 * y2 - y1 * x2 * x2);
-    //    return  u / Mathf.Pow(axis.magnitude, 2)
-    //}
+    
 
 }
