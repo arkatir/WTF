@@ -40,7 +40,7 @@ public class GravityGunController : SlotItem
         rayOrigin = Camera.main.transform.position;
         rayDirection = Camera.main.transform.forward;
 
-        Debug.DrawLine(rayOrigin, rayOrigin + rayDirection * 100, Color.red);
+        //Debug.DrawLine(rayOrigin, rayOrigin + rayDirection * 100, Color.red);
 
         if (objectHold)
         {
