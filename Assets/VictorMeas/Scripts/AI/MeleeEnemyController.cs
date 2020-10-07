@@ -24,6 +24,7 @@ public class MeleeEnemyController : MonoBehaviour
     public float attackCooldown;
     public GameObject attackProjectilePrefab;
     public bool isPursuing = false;
+    public bool isDodging = false;
     public bool isDying = false;
     [Header("Animation")]
     public Animator enemyAnimator;
@@ -43,6 +44,7 @@ public class MeleeEnemyController : MonoBehaviour
         nav.isStopped = false;
         this.GetComponent<Rigidbody>().isKinematic = true;
         isPursuing = false;
+        isDodging = false;
         isDying = false;
         lastSavedPosition = transform.position;
         currentTime = 0f;
@@ -58,7 +60,7 @@ public class MeleeEnemyController : MonoBehaviour
             CheckMovement();
             TransmitInfoToAnimator();
         }
-        if(enemyDetector.isDetected == true && !isPursuing)
+        if(enemyDetector.isDetected == true && !isPursuing && !isDodging) //Can only pursue if not dodging and if player is visible
         {
             isPursuing = true;
         }
@@ -103,7 +105,7 @@ public class MeleeEnemyController : MonoBehaviour
     public void Attack()
     {
         enemyAnimator.SetTrigger("Attack");
-        ObjectPoolManager.managerInstance.CreateObject(attackProjectileName, transform.position, transform.rotation);
+        ObjectPoolManager.managerInstance.CreateObject(attackProjectileName, transform.position + transform.forward * 1f, transform.rotation);
         //Spawn un "projectile" immobile trigger qui peut faire des degats au joueur on trigger enter
     }
 
