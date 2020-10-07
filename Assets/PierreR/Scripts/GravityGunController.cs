@@ -4,13 +4,11 @@ using UnityEngine;
 
 public class GravityGunController : SlotItem
 {
-    public float floatingForce = 1f;
+    public float floatingForce = 23f;
     public Rigidbody objSelRigidB;
     public LineRenderer particles;
-    public float floatingPushInterval = 1;
-    public float floatingMass = 0.1f;
-    public float pushForce = 100f;
-    public float throwWeaponForce = 30f;
+    public float pushForce = 15f;
+    public float throwWeaponForce = 10f;
     public float deltaDistance = 1f;
     public float xRotationToPlayer = -14.127f;
     public float yRotationToPlayer = -20.579f;
