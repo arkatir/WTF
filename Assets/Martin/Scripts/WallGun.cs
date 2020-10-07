@@ -47,7 +47,7 @@ public class WallGun : SlotItem
     public override void OnRemove()
     {
         _held = false;
-        Vector3 newPos = transform.parent.position + 3 * transform.parent.forward;
+        Vector3 newPos = transform.parent.position + 10 * transform.parent.forward;
         transform.SetParent(null);
         transform.position = new Vector3(newPos.x, 1, newPos.z);
         transform.localRotation = Quaternion.identity;
