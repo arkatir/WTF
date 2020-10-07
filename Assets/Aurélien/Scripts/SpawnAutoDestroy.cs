@@ -27,8 +27,8 @@ public class SpawnAutoDestroy : MonoBehaviour
     {
         if (other.CompareTag("Player") && active)
         {
-            float spawnRadius = (spawnNumber - 1) / 2;
-            float spawnAngle = (360) / spawnNumber;
+            float spawnRadius = (Mathf.Min(spawnNumber, 10) - 1) / 2;
+            float spawnAngle = (360) / Mathf.Min(spawnNumber, 10);
             spawnPos.transform.position = new Vector3(spawnRadius, 0, 0) + transform.position;
             for (int i = 0; i < Mathf.Min(spawnNumber, 10); i++)
             {
@@ -40,7 +40,10 @@ public class SpawnAutoDestroy : MonoBehaviour
                 spawnPos.transform.RotateAround(transform.position, Vector3.up, spawnAngle);
             }
             spawnNumber++;
-            transform.localScale *= 1.2f;
+            if (transform.localScale.x < 50.0f)
+            {
+                transform.localScale *= 1.2f;
+            }
             StartCoroutine(Deactivate());
         }
         

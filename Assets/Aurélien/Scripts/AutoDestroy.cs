@@ -6,8 +6,8 @@ public class AutoDestroy : MonoBehaviour
 {
     public GameObject target;
     private float explosionRadius = 5.0f;
-    private float explosionForce = 20000.0f;
-    private float propulsion = 3000.0f;
+    private float explosionForce = 100000.0f;
+    private float propulsion = 300.0f;
     private bool moving = true;
     private bool exploding = false;
     private Rigidbody rb;
@@ -16,6 +16,7 @@ public class AutoDestroy : MonoBehaviour
     public Color color1 = new Color(1, 0, 0);
     public Color color2 = new Color(0, 0, 0);
     private Material mat;
+    public GameObject explosion;
 
     // Start is called before the first frame update
     void Start()
@@ -97,6 +98,7 @@ public class AutoDestroy : MonoBehaviour
                 obj.GetComponent<AutoDestroy>().StartCoroutine(WaitResume());
             }
         }
+        Instantiate(explosion, transform.position, explosion.transform.rotation);
         Destroy(gameObject);
     }
 

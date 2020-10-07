@@ -61,7 +61,7 @@ MonoBehaviour:
   slotIndex: 0
   wallsPrefab: {fileID: 8538935337560923843, guid: 8c8fa350997c9444e899b0cfa9bd831b, type: 3}
   groundRotationSpeed: 60
-  minIntervalBetweenShots: 0.8
+  minIntervalBetweenShots: 0.3
   distance: 10
 --- !u!1001 &8774577997382491039
 PrefabInstance:

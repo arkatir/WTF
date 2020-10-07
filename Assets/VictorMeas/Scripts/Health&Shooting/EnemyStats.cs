@@ -23,6 +23,7 @@ public class EnemyStats : MonoBehaviour
     public void OnEnable()
     {
         health = maxHealth;
+        this.gameObject.transform.localScale = Vector3.one; 
     }
 
     public void AddHealth(int val)

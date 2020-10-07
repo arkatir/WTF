@@ -25,8 +25,11 @@ public class WallGun : SlotItem
             {
                 if (Time.time >= _lastShot + minIntervalBetweenShots)
                 {
-                    ObjectPoolManager.managerInstance.CreateObject(projectileName, transform.position + transform.forward * distance + Vector3.up * 2, Quaternion.identity);
-                    _lastShot = Time.time;
+                    if (Physics.Raycast(transform.parent.position, transform.parent.forward, out RaycastHit hitInfo))
+                    {
+                        ObjectPoolManager.managerInstance.CreateObject(projectileName, hitInfo.point + Vector3.up * 2, Quaternion.identity);
+                        _lastShot = Time.time;
+                    }
                 }
             }
         }
@@ -47,9 +50,9 @@ public class WallGun : SlotItem
     public override void OnRemove()
     {
         _held = false;
-        Vector3 newPos = transform.parent.position + 3 * transform.parent.forward;
+        Vector3 newPos = transform.parent.position + 10 * transform.parent.forward;
         transform.SetParent(null);
-        transform.localPosition = new Vector3(newPos.x, 1, newPos.z);
+        transform.position = new Vector3(newPos.x, 1, newPos.z);
         transform.localRotation = Quaternion.identity;
     }
 }
