@@ -1,25 +1,33 @@
 ﻿using UnityEngine;
 
-public class DivideGun : MonoBehaviour
+public class DivideGun : SlotItem
 {
     public GameObject projectilePrefab;
-    public float rotationSpeed = 60f;
+    public float groundRotationSpeed = 60f;
+    //public float firingRotationSpeed = 270f;
+    public float minIntervalBetweenShots = 0.2f;
 
-    private bool held = true;
+    private bool _held = true;
+    private float _lastShot;
 
     // Update is called once per frame
     void Update()
     {
-        if (held)
+        if (_held)
         {
-            if (Input.GetMouseButtonDown(0))
+            if (Input.GetMouseButton(0))
             {
-                Instantiate(projectilePrefab, transform.position, transform.rotation);
+                //transform.localRotation = Quaternion.Euler(0, 0, transform.localRotation.eulerAngles.z + Time.deltaTime * firingRotationSpeed);
+                if (Time.time >= _lastShot + minIntervalBetweenShots)
+                {
+                    Instantiate(projectilePrefab, transform.position, transform.rotation);
+                    _lastShot = Time.time;
+                }
             }
         }
         else
         {
-            transform.localRotation = Quaternion.Euler(0, transform.localRotation.eulerAngles.y + Time.deltaTime * rotationSpeed, 0);
+            transform.localRotation = Quaternion.Euler(0, transform.localRotation.eulerAngles.y + Time.deltaTime * groundRotationSpeed, 0);
         }
     }
 
