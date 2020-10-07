@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class FishSchool : MonoBehaviour
 {
-    public float range = 10;
+    public float initRange = 10;
+    public float range = 40;
+
     public GameObject fishPrefab;
     public int fishNumber = 10;
     public static GameObject[] fishSchool { get; set; }
@@ -28,30 +30,16 @@ public class FishSchool : MonoBehaviour
     {
         for (int i = 0; i < fishNumber; i++)
         {
-            Vector3 startPosition = new Vector3(Random.Range(-range, range), Random.Range(-range, range), Random.Range(-range, range));
+            Vector3 startPosition = new Vector3(Random.Range(-initRange, initRange), Random.Range(-initRange, initRange), Random.Range(-initRange, initRange));
             fishSchool[i] = (GameObject)Instantiate(fishPrefab, startPosition, Quaternion.identity);
         }
     }
 
     void ChangeGoal()
     {
-        if(Random.Range(0,1000) < 50)
+        if(Random.Range(0,5000) < 50)
         {
             goal = new Vector3(Random.Range(-range, range), Random.Range(-range, range), Random.Range(-range, range));
         }
-    }
-    void Separation()
-    {
-
-    }
-
-    void Alignment()
-    {
-
-    }
-
-    void Collision()
-    {
-
     }
 }
