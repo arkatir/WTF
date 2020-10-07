@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -42,6 +43,8 @@ public class GravityGunController : SlotItem
 
         //Debug.DrawLine(rayOrigin, rayOrigin + rayDirection * 100, Color.red);
 
+        checkIfObjectHoldStillExists();
+
         if (objectHold)
         {
             Vector3 end = particles.transform.InverseTransformPoint(objSelRigidB.transform.position);
@@ -68,6 +71,12 @@ public class GravityGunController : SlotItem
         }    
     }
 
+    private void checkIfObjectHoldStillExists()
+    {
+        if (objectHold && objSelRigidB == null)
+            DropObject();
+    }
+
     private void PickUpObject()
     {
         bool touchedSomething = Physics.Raycast(rayOrigin, rayDirection, out shootingRaycast);
@@ -86,6 +95,11 @@ public class GravityGunController : SlotItem
     private void ThrowObject()
     {
         objSelRigidB.AddForce(Camera.main.transform.forward * pushForce, ForceMode.Impulse);
+        DropObject();
+    }
+
+    private void DropObject()
+    {
         objSelRigidB = null;
         objectHold = false;
         particles.gameObject.SetActive(false);
@@ -116,6 +130,7 @@ public class GravityGunController : SlotItem
 
     public override void OnRemove()
     {
+        DropObject();
         selected = false;
         transform.SetParent(null);
         GetComponent<Rigidbody>().isKinematic = false;
