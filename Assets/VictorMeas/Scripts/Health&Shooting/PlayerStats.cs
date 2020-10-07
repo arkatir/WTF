@@ -28,6 +28,7 @@ public class PlayerStats : MonoBehaviour
         }
         else
         {
+            EventManager.TriggerEvent("PlayerTakeDamage");
             health = removedVal;
         }
     }

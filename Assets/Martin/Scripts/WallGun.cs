@@ -1,21 +1,19 @@
 ﻿using UnityEngine;
 
-public class DivideGun : SlotItem
+public class WallGun : SlotItem
 {
-    public GameObject projectilePrefab;
+    public GameObject wallsPrefab;
     public float groundRotationSpeed = 60f;
     public float minIntervalBetweenShots = 0.2f;
-    public Material defaultMaterial;
-    public Material groundMaterial;
+    public float distance = 5f;
 
     private bool _held;
     private float _lastShot;
     private string projectileName;
 
-    public void Start()
+    private void Start()
     {
-        projectileName = projectilePrefab.name;
-        GetComponentInChildren<MeshRenderer>().sharedMaterial = groundMaterial;
+        projectileName = wallsPrefab.name;
     }
 
     // Update is called once per frame
@@ -27,7 +25,7 @@ public class DivideGun : SlotItem
             {
                 if (Time.time >= _lastShot + minIntervalBetweenShots)
                 {
-                    ObjectPoolManager.managerInstance.CreateObject(projectileName, transform.position, transform.rotation);
+                    ObjectPoolManager.managerInstance.CreateObject(projectileName, transform.position + transform.forward * distance + Vector3.up * 2, Quaternion.identity);
                     _lastShot = Time.time;
                 }
             }
@@ -41,7 +39,6 @@ public class DivideGun : SlotItem
     public override void OnInsert()
     {
         _held = true;
-        GetComponentInChildren<MeshRenderer>().sharedMaterial = defaultMaterial;
         transform.SetParent(Player.Get().GetComponentInChildren<Camera>().transform);
         transform.localPosition = Vector3.zero;
         transform.localRotation = Quaternion.identity;
@@ -50,9 +47,8 @@ public class DivideGun : SlotItem
     public override void OnRemove()
     {
         _held = false;
-        GetComponentInChildren<MeshRenderer>().sharedMaterial = groundMaterial;
         Vector3 newPos = transform.parent.position + 3 * transform.parent.forward;
-        transform.SetParent(null);        
+        transform.SetParent(null);
         transform.localPosition = new Vector3(newPos.x, 1, newPos.z);
     }
 }

@@ -8,7 +8,7 @@ public class DivideGunProjectile : MonoBehaviour
 
     private float _startTime;
 
-    private void Start()
+    private void OnEnable()
     {
         _startTime = Time.time;
     }
@@ -17,7 +17,7 @@ public class DivideGunProjectile : MonoBehaviour
     {
         if (Time.time >= _startTime + timeToLive)
         {
-            Destroy(gameObject);
+            ObjectPoolManager.managerInstance.RemoveObject(gameObject);
         }
         else
         {
@@ -34,6 +34,9 @@ public class DivideGunProjectile : MonoBehaviour
             enemyStats.transform.localScale *= 0.75f;
             GameObject clone = Instantiate(other.gameObject, (transform.up * 2 + Random.Range(-1f, 1f) * transform.right) * spread, Quaternion.identity);
         }
-        Destroy(gameObject);
+        if (!other.TryGetComponent(out DivideGun divideGun) && !other.TryGetComponent(out PlayerStats playerStats))
+        {
+            ObjectPoolManager.managerInstance.RemoveObject(gameObject);
+        }
     }
 }

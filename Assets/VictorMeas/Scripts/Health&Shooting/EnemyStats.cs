@@ -7,14 +7,22 @@ using UnityEngine;
 /// </summary>
 public class EnemyStats : MonoBehaviour
 {
+
     // Start is called before the first frame update
     [SerializeField]
     private int maxHealth;
     [SerializeField]
     private int health;
+
+    public Animator m_EnemyAnimator;
+    public MeleeEnemyController m_EnemyController;
     void Start()
     {
+    }
 
+    public void OnEnable()
+    {
+        health = maxHealth;
     }
 
     public void AddHealth(int val)
@@ -28,10 +36,18 @@ public class EnemyStats : MonoBehaviour
         if (removedVal < 0)
         {
             health = 0;
-            ObjectPoolManager.managerInstance.RemoveObject(this.gameObject); //Sets enemy inactive on health to 0
+            if (!m_EnemyController.isDying)
+            {
+                StartCoroutine(RemoveAfterDeath());
+            }
+            
         }
         else
         {
+            if (m_EnemyAnimator)
+            {
+                m_EnemyAnimator.SetTrigger("Hit");
+            }
             health = removedVal;
         }
     }
@@ -51,5 +67,26 @@ public class EnemyStats : MonoBehaviour
     void Update()
     {
 
+    }
+
+    private IEnumerator RemoveAfterDeath()
+    {
+        if (m_EnemyController)
+        {
+            m_EnemyController.isDying = true;
+            //this.GetComponent<Rigidbody>().isKinematic = true;
+            m_EnemyController.nav.isStopped = true;
+        }
+        if (m_EnemyAnimator)
+        {
+            m_EnemyAnimator.SetTrigger("Death"); //launch death anim
+                                                 //Fetch the current Animation clip information for the base layer
+            var m_CurrentClipInfo = m_EnemyAnimator.GetCurrentAnimatorClipInfo(0);
+            //Access the current length of the clip
+            var m_CurrentClipLength = m_CurrentClipInfo[0].clip.length;
+            yield return new WaitForSeconds(m_CurrentClipLength + 3f); //Wait for end of clip before removing enemy GameObject
+        }
+        ObjectPoolManager.managerInstance.RemoveObject(this.gameObject);
+        yield return null;
     }
 }
