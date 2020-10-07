@@ -90,8 +90,4 @@ public class flarebullet : MonoBehaviour
        teleport = false;
     }
 
-
-
-
 }
-

@@ -85,6 +85,7 @@ MonoBehaviour:
   flareBurningSound: {fileID: 8300000, guid: 0ed0d71c3db32c64aa047c6dc5794514, type: 3}
   Player: {fileID: 0}
   space: 2
+  marker: {fileID: 0}
 --- !u!108 &10800000
 Light:
   m_ObjectHideFlags: 0
