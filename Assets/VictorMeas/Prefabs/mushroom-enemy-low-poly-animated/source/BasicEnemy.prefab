@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 2493902477308714221}
   - component: {fileID: 5350471234672454438}
   - component: {fileID: 5801471415636693107}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: playerDetector
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -166,8 +166,8 @@ MonoBehaviour:
   nav: {fileID: 0}
   maxRoamTime: 7
   maxRadiusPoint: 20
-  attackDistance: 3
-  attackCooldown: 1.5
+  attackDistance: 2
+  attackCooldown: 2
   attackProjectilePrefab: {fileID: 1320716786197715938, guid: 6934aa213d5f05742af265248089aed1, type: 3}
   isPursuing: 0
   isDodging: 0

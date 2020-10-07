@@ -6,7 +6,7 @@ public class AutoDestroy : MonoBehaviour
 {
     public GameObject target;
     private float explosionRadius = 5.0f;
-    private float explosionForce = 20000.0f;
+    private float explosionForce = 100000.0f;
     private float propulsion = 300.0f;
     private bool moving = true;
     private bool exploding = false;
