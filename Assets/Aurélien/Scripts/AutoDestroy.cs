@@ -60,7 +60,6 @@ public class AutoDestroy : MonoBehaviour
         {
             Explode();
         }
-        Debug.Log(timer % 1);
         if (timer % 1 < 0.5f)
         {
             mat.SetColor("_BaseColor", color1);

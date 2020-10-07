@@ -43,7 +43,7 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 15
+  m_Radius: 20
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &5801471415636693107
 MonoBehaviour:
@@ -139,10 +139,10 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5
-  m_Speed: 2
-  m_Acceleration: 6
+  m_Speed: 3
+  m_Acceleration: 8
   avoidancePriority: 50
-  m_AngularSpeed: 300
+  m_AngularSpeed: 400
   m_StoppingDistance: 0
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
@@ -170,6 +170,7 @@ MonoBehaviour:
   attackCooldown: 1.5
   attackProjectilePrefab: {fileID: 1320716786197715938, guid: 6934aa213d5f05742af265248089aed1, type: 3}
   isPursuing: 0
+  isDodging: 0
   isDying: 0
   enemyAnimator: {fileID: 1582270755479457078}
   enemyDetector: {fileID: 5801471415636693107}

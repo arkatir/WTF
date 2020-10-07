@@ -12,9 +12,11 @@ public class DamageCameraEffect : MonoBehaviour
 
     public float nonDamageAlpha = 0f;
     public float damagedAlpha = 50f;
+    public float fadeTime;
     public Image imageToAffect;
 
     private UnityAction onPlayerDamageListener;
+    private YieldInstruction fadeInstruction = new YieldInstruction();
 
     // Start is called before the first frame update
     void Awake()
@@ -43,20 +45,21 @@ public class DamageCameraEffect : MonoBehaviour
         Color currentcol = imageToAffect.color;
         currentcol.a = damagedAlpha;
         imageToAffect.color = currentcol;
-        StartCoroutine(SlowlyGoBackToNormal(0.1f));
+        StartCoroutine(FadeOut(imageToAffect));
+        //StartCoroutine(SlowlyGoBackToNormal(0.1f));
     }
 
-    private IEnumerator SlowlyGoBackToNormal(float increment)
+    
+    IEnumerator FadeOut(Image image)
     {
-        float currentAlpha = damagedAlpha - 1;
-        while(currentAlpha > 0)
+        float elapsedTime = 0.0f;
+        Color c = image.color;
+        while (elapsedTime < fadeTime)
         {
-            Color currentcol = imageToAffect.color;
-            currentcol.a = currentAlpha;
-            imageToAffect.color = currentcol;
-            currentAlpha -= 1;
-            yield return new WaitForSeconds(increment);
+            yield return fadeInstruction;
+            elapsedTime += Time.deltaTime;
+            c.a = 1.0f - Mathf.Clamp01(elapsedTime / fadeTime);
+            image.color = c;
         }
-        yield return null;
     }
 }
