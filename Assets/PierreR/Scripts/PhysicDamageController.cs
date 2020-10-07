@@ -19,7 +19,7 @@ public class PhysicDamageController : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        EnemyStats es = collision.rigidbody.GetComponent<EnemyStats>();
+        EnemyStats es = collision.gameObject.GetComponent<EnemyStats>();
         if (es != null)
             es.RemoveHealth((int)transform.GetComponent<Rigidbody>().velocity.magnitude * damageFactor);
     }
