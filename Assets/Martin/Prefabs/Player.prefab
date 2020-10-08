@@ -1418,7 +1418,7 @@ MonoBehaviour:
   flareGun: {fileID: 8300000, guid: 023022d4e0fc8ca469fed45d7fd91f2a, type: 3}
   hurt: {fileID: 8300000, guid: dec49d91bc1b57847a16aefa8bf223a0, type: 3}
   reload: {fileID: 8300000, guid: 490041ca126bbf3408b5ba4a25721b84, type: 3}
-  mushroomDie: {fileID: 0}
+  mushroomDie: {fileID: 8300000, guid: d42a76b333a0b544b842dfff06042764, type: 3}
   explosion: {fileID: 8300000, guid: dfd06c15f59890144823ba844273f581, type: 3}
 --- !u!1 &8747768995892367515
 GameObject:
