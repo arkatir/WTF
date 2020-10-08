@@ -9,131 +9,173 @@ public class FishAlone : MonoBehaviour
     float rotationSpeed = 1;
     private bool notSeen = true;
 
-    public float playerDistance;
+    Vector3 SpawnPoint;
+    float initRange;
 
-    public GameObject[] flock;
-    public GameObject[] noticedNeighbour;
+    float playerDistance;
+
+    FishSchool flock;
+    GameObject[] noticedNeighbour;
     public GameObject player;
 
     Vector3 averagePosition;
-    public int noticedNeighbourNumber = 4;
+    int noticedNeighbourNumber = 4;
 
     Material m_Material;
 
     //countdown
-    private bool isCountingDown = false;
-    float timeAfterCountdown;
+    private bool isCountingDownDeath = false;
+    float timeAfterDeathCountdown;
+
+    private bool isCountingDownSpawn = false;
+    float timeAfterSpawnCountdown;
 
     bool isDeadFish = true;
+
     void Start()
     {
+        flock = FishSchool.sharedInstance;
         player = GameObject.Find("Player");
-        m_Material = GetComponent<Renderer>().material;
-        m_Material.SetFloat("_RandVal", Random.Range(0f, 6.28f));
-        m_Material.SetFloat("_Danger", 1f);
-
+        SpawnPoint = flock.transform.position;
+        initRange = flock.initRange;
+        playerDistance = flock.PlayerDetectionDistance;
+        isDeadFish = false;
     }
 
     private void OnEnable()
     {
-        timeAfterCountdown = 0;
-        isCountingDown = false;
+        notSeen = true;
+        timeAfterDeathCountdown = 0;
+        isCountingDownDeath = false;
+        timeAfterSpawnCountdown = 0;
+        isCountingDownSpawn = false;
         startSpeed = Random.Range(0.8f, 1.5f);
         speed = startSpeed;
         noticedNeighbour = new GameObject[noticedNeighbourNumber];
-        isDeadFish = false;
+        m_Material = GetComponent<Renderer>().material;
+        m_Material.SetFloat("_RandVal", Random.Range(0f, 6.28f));
+        m_Material.SetFloat("_Danger", 1f);
     }
 
-    private void OnDisable()
-    {
-        isDeadFish = true;
-    }
     void Update()
     {
         if (!isDeadFish)
         {
-            if (Vector3.Distance(this.transform.position, player.transform.position) > playerDistance)
+            if (Vector3.Distance(this.transform.position, player.transform.position) > playerDistance) //Player is far
             {
-                if (notSeen)
+                if (notSeen) //set the blue fish color 
                 {
                     m_Material.SetFloat("_Danger", 1f);
                     notSeen = false;
                 }
-                if (Random.Range(0, 4) < 1)
+                if (Random.Range(0, 4) < 1) //Apply the flocking rules with a bit of randomness
                 {
                     ApplyRules();
-                    Debug.Log("test");
                 }
                 transform.position += transform.forward * speed * Time.deltaTime;
             }
 
-            else
+            else //Player is nearby
             {
-                if (!notSeen)
+
+                HuntPlayer();
+            }
+
+            if (isCountingDownDeath) //Countdown before deactivation
+            {
+                timeAfterDeathCountdown += Time.deltaTime;
+            }
+
+            if (timeAfterDeathCountdown > 1) //deactivation
+            {
+                PlayerStats ps = player.GetComponent<PlayerStats>();
+                ps.RemoveHealth(1);
+                SpawnFish();
+                isDeadFish = true;
+                isCountingDownSpawn = true;
+                //this.gameObject.SetActive(false);
+            }
+        }
+
+        else
+        {
+            if (isCountingDownSpawn) //Countdown before reappearance
+            {
+                timeAfterSpawnCountdown += Time.deltaTime;
+            }
+
+            if (timeAfterSpawnCountdown > 17 + 1 * Random.Range(0.0f, 20.0f))
+            {
+                gameObject.GetComponent<Renderer>().enabled = true;
+                isDeadFish = false;
+            }
+        }
+
+
+        //flocking rules
+        void ApplyRules()
+        {
+            //flock = FishSchool.sharedInstance;
+                //FishSchool.fishSchool;
+
+            averagePosition = Vector3.zero;
+
+            Vector3 goal = FishSchool.goal;
+            int c = 0;
+
+            //random neighbour choice
+            GameObject neigbour;
+            while (c < noticedNeighbourNumber)
+            {
+                neigbour = flock.fishSchool[Random.Range(0, flock.fishNumber)]; // ne vérifie pas si les neighbours choisis sont différents mais osef ça marche
+                if (neigbour != this.gameObject)
                 {
-                    notSeen = true;
-                    m_Material.SetFloat("_Danger", 0f);
-                }
-                this.transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(player.transform.position - this.transform.position), rotationSpeed * Time.deltaTime * 2);
-                transform.position += transform.forward * speed * Time.deltaTime * 4;
-
-                if (Vector3.Distance(this.transform.position, player.transform.position) < 0.4f)
-                {
-                    isCountingDown = true;
+                    noticedNeighbour[c] = neigbour;
+                    c += 1;
                 }
             }
 
-            if (isCountingDown)
+            foreach (GameObject fish in noticedNeighbour)
             {
-                timeAfterCountdown += Time.deltaTime;
+                averagePosition += fish.transform.position;
+                FishAlone otherfish = fish.GetComponent<FishAlone>();
             }
 
-            if (timeAfterCountdown > 1.5)
+            averagePosition = averagePosition / noticedNeighbourNumber + (goal - this.transform.position);
+            Vector3 direction = averagePosition - this.transform.position;
+            float diffDir = Quaternion.Dot(transform.rotation, Quaternion.LookRotation(direction));
+            this.speed = 0.3f + Mathf.Abs(diffDir * startSpeed);
+            this.rotationSpeed = this.speed;
+            if (direction != Vector3.zero)
             {
-                this.gameObject.SetActive(false);
-                //deactivate fish
-            }
-        }
-
-    }
-
-
-    //regle de flocking
-    void ApplyRules()
-    {
-        flock = FishSchool.fishSchool;
-
-        averagePosition = Vector3.zero;
-
-        Vector3 goal = FishSchool.goal;
-        int c = 0;
-
-        //Choix des neigbours aléatoires
-        GameObject neigbour;
-        while (c < noticedNeighbourNumber)
-        {
-            neigbour = flock[Random.Range(0, flock.Length)]; // ne vérifie pas si les neighbours choisis sont différents
-            if (neigbour != this.gameObject)
-            {
-                noticedNeighbour[c] = neigbour;
-                c += 1;
+                this.transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(direction), rotationSpeed * Time.deltaTime);
             }
         }
 
-        foreach (GameObject fish in noticedNeighbour)
+
+        void HuntPlayer()
         {
-            averagePosition += fish.transform.position;
-            FishAlone otherfish = fish.GetComponent<FishAlone>();
+            if (!notSeen) //set the red fish color 
+            {
+                notSeen = true;
+                m_Material.SetFloat("_Danger", 0f);
+            }
+            this.transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(player.transform.position - this.transform.position), rotationSpeed * Time.deltaTime * 2);
+            transform.position += transform.forward * speed * Time.deltaTime * 5;
+
+            if (Vector3.Distance(this.transform.position, player.transform.position) < 0.4f)
+            {
+                isCountingDownDeath = true;
+
+            }
         }
 
-        averagePosition = averagePosition / noticedNeighbourNumber + (goal - this.transform.position);
-        Vector3 direction = averagePosition - this.transform.position;
-        float diffDir = Quaternion.Dot(transform.rotation, Quaternion.LookRotation(direction));
-        this.speed = 0.3f + Mathf.Abs(diffDir * startSpeed);
-        this.rotationSpeed = this.speed;
-        if (direction != Vector3.zero)
+        void SpawnFish()
         {
-            this.transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(direction), rotationSpeed * Time.deltaTime);
+            Vector3 startPosition = SpawnPoint + Random.insideUnitSphere * Random.Range(-initRange, initRange);
+            this.transform.position = startPosition;
+            OnEnable();
+            gameObject.GetComponent<Renderer>().enabled = false;
         }
     }
 
