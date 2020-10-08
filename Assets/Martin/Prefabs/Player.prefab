@@ -430,6 +430,7 @@ GameObject:
   - component: {fileID: 1817097046722217244}
   - component: {fileID: 3729567567256957247}
   - component: {fileID: 1359467864240678560}
+  - component: {fileID: 6926882244033987796}
   m_Layer: 10
   m_Name: Player
   m_TagString: Player
@@ -607,8 +608,11 @@ MonoBehaviour:
   - {fileID: 4150955030609946202, guid: a4b3e2ccb2dd0e54b9202d68a5b7b2c8, type: 3}
   - {fileID: 8538935337560923843, guid: 8c8fa350997c9444e899b0cfa9bd831b, type: 3}
   - {fileID: 1320716786197715938, guid: 6934aa213d5f05742af265248089aed1, type: 3}
+  - {fileID: 2625507619696003944, guid: 7485d46b3f701584aaba0df0cf84631c, type: 3}
+  - {fileID: 2625507619696003944, guid: 927cbbbe66f523b439bcb0089c62f1e3, type: 3}
+  - {fileID: 1320716786197715938, guid: 340961b4ea6fa394a9a45c23f27ec621, type: 3}
   storageTransform: {fileID: 2061519649705485761}
-  initialAmountToPool: 50
+  initialAmountToPool: 40
 --- !u!114 &3729567567256957247
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -635,6 +639,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d5abc7a4bf48ce148aaa1393095e1094, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &6926882244033987796
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2061519649705130469}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3557dff43cb02f14593af623b034c016, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &2061519649705130471
@@ -697,7 +713,7 @@ Camera:
     width: 1
     height: 1
   near clip plane: 0.3
-  far clip plane: 1000
+  far clip plane: 5000
   field of view: 60
   orthographic: 0
   orthographic size: 5
