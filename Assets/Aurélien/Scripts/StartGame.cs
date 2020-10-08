@@ -41,7 +41,7 @@ public class StartGame : MonoBehaviour
         while (!result.isDone)
         {
             float progress = result.progress;
-            loading.fillAmount = progress;
+            loading.transform.localScale = new Vector3(progress, 1, 1);
             loadingText.text = "Loading : " + (progress * 100) + "%";
             yield return null;
             Debug.Log(progress);
