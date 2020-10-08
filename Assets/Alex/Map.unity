@@ -9871,23 +9871,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5379167923338738211, guid: 3072adaf2e015de468710fccb461a0dd, type: 3}
       propertyPath: thingCount
-      value: 1000
+      value: 300
       objectReference: {fileID: 0}
     - target: {fileID: 5379167923338738211, guid: 3072adaf2e015de468710fccb461a0dd, type: 3}
       propertyPath: thingSpeed
-      value: 10
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 5379167923338738211, guid: 3072adaf2e015de468710fccb461a0dd, type: 3}
       propertyPath: tintColor.r
-      value: 0.5754717
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5379167923338738211, guid: 3072adaf2e015de468710fccb461a0dd, type: 3}
       propertyPath: tintColor.g
-      value: 0.25733355
+      value: 0.63222045
       objectReference: {fileID: 0}
     - target: {fileID: 5379167923338738211, guid: 3072adaf2e015de468710fccb461a0dd, type: 3}
       propertyPath: tintColor.b
-      value: 0.25733355
+      value: 0.7169812
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3072adaf2e015de468710fccb461a0dd, type: 3}
