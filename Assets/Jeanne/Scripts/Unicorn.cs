@@ -14,6 +14,7 @@ public class Unicorn : SlotItem
     {
         player = GameObject.Find("Player");
         rb = GetComponent<Rigidbody>();
+        GetComponent<LaserUnicorn>().enabled = false;
 
     }
 
@@ -33,9 +34,10 @@ public class Unicorn : SlotItem
         transform.parent.parent = player.transform;
         Camera cam = player.gameObject.transform.GetComponentInChildren<Camera>();
         player.gameObject.transform.GetComponentInChildren<HeadBob>().enabled = false;
-        cam.transform.position += Vector3.up * 0.5f;
+        cam.transform.position += Vector3.up * 1.2f;
         runMultBase = player.GetComponent<RigidbodyFirstPersonController>().movementSettings.RunMultiplier;
         player.GetComponent<RigidbodyFirstPersonController>().movementSettings.RunMultiplier = 5;
+        GetComponent<LaserUnicorn>().enabled = true;
 
 
     }
@@ -49,11 +51,11 @@ public class Unicorn : SlotItem
         player.SetActive(true);
         player.gameObject.transform.GetComponentInChildren<HeadBob>().enabled = true;
         Camera.main.transform.parent = player.transform;
-        Camera.main.transform.position -= Vector3.up * 0.5f;
+        Camera.main.transform.position -= Vector3.up * 1.2f;
         GetComponent<MeshCollider>().enabled = true;
         transform.parent.parent = null;
         player.GetComponent<RigidbodyFirstPersonController>().movementSettings.RunMultiplier = runMultBase;
-
+        GetComponent<LaserUnicorn>().enabled = false;
     }
 
 }
