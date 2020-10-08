@@ -12,7 +12,7 @@ public class EnemyStats : MonoBehaviour
     [SerializeField]
     private int maxHealth;
     [SerializeField]
-    private int health;
+    private float health;
 
     public Animator m_EnemyAnimator;
     public MeleeEnemyController m_EnemyController;
@@ -33,9 +33,9 @@ public class EnemyStats : MonoBehaviour
         health += val;
     }
 
-    public void RemoveHealth(int val)
+    public void RemoveHealth(float val)
     {
-        int removedVal = health - val;
+        float removedVal = health - val;
         if (removedVal < 0)
         {
             health = 0;
@@ -64,12 +64,12 @@ public class EnemyStats : MonoBehaviour
         }
     }
 
-    public int GetHealth()
+    public float GetHealth()
     {
         return health;
     }
 
-    public int SetHealth(int val)
+    public float SetHealth(float val)
     {
         health = val;
         return health;

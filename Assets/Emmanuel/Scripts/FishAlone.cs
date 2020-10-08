@@ -40,18 +40,25 @@ public class FishAlone : MonoBehaviour
         initRange = flock.initRange;
         playerDistance = flock.PlayerDetectionDistance;
         isDeadFish = false;
+        noticedNeighbour = new GameObject[noticedNeighbourNumber];
     }
 
     private void OnEnable()
     {
-        notSeen = true;
+        if (Vector3.Distance(player.transform.position, this.transform.position) < playerDistance)
+        {
+            notSeen = true;
+        }
+        else
+        {
+            notSeen = false;
+        }
         timeAfterDeathCountdown = 0;
         isCountingDownDeath = false;
         timeAfterSpawnCountdown = 0;
         isCountingDownSpawn = false;
         startSpeed = Random.Range(0.8f, 1.5f);
         speed = startSpeed;
-        noticedNeighbour = new GameObject[noticedNeighbourNumber];
         m_Material = GetComponent<Renderer>().material;
         m_Material.SetFloat("_RandVal", Random.Range(0f, 6.28f));
         m_Material.SetFloat("_Danger", 1f);
