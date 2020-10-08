@@ -6,7 +6,8 @@ public class LaserUnicorn : MonoBehaviour
 
     public float angleAim = 30;
     private Transform target = null;
-    public int damage = 10;
+    public int damage = 50;
+    public float fireTime = 0;
     
     void Update()
     {
@@ -26,15 +27,14 @@ public class LaserUnicorn : MonoBehaviour
             }
             else
             {
-               
-              l.SetPosition(1, target.position);
-              l.SetPosition(0, l.transform.position);
-
-                //faire des dégats
-                if (Time.time > 1)
+                l.SetPosition(1, target.position);
+                l.SetPosition(0, l.transform.position);
+                
+                if ((Time.time - fireTime) > 0.1)
                 {
                     //attaquer l'ennemi enlever 10 dégats par seconde
-                    target.GetComponent<EnemyStats>().RemoveHealth(damage);
+                    target.GetComponent<EnemyStats>().RemoveHealth(damage * 0.1f);
+                    fireTime = Time.time;
                 }
 
             }
