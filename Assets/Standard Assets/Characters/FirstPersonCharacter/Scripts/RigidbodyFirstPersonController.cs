@@ -81,13 +81,19 @@ namespace UnityStandardAssets.Characters.FirstPerson
         public MovementSettings movementSettings = new MovementSettings();
         public MouseLook mouseLook = new MouseLook();
         public AdvancedSettings advancedSettings = new AdvancedSettings();
+        public bool jetpackMode = false;
+        public float jetpackThrustForce = 20f;
+        public float jetpackMaxYVelocity = 20f;
+        public float jetpackContinuousThrustPeriodInSeconds = 3f;
+        public float jetpackMinThrustPeriodForActivationInSeconds = 1f;
 
-
+        public float jetpackThrustTimeLeft;
         private Rigidbody m_RigidBody;
         private CapsuleCollider m_Capsule;
         private float m_YRotation;
         private Vector3 m_GroundContactNormal;
         private bool m_Jump, m_PreviouslyGrounded, m_Jumping, m_IsGrounded;
+        public bool m_Thrust, m_Thrusting;
 
 
         public Vector3 Velocity
@@ -123,6 +129,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
             m_RigidBody = GetComponent<Rigidbody>();
             m_Capsule = GetComponent<CapsuleCollider>();
             mouseLook.Init (transform, cam.transform);
+            jetpackThrustTimeLeft = jetpackContinuousThrustPeriodInSeconds;
         }
 
 
@@ -130,31 +137,66 @@ namespace UnityStandardAssets.Characters.FirstPerson
         {
             RotateView();
 
-            if (CrossPlatformInputManager.GetButtonDown("Jump") && !m_Jump)
+            if (CrossPlatformInputManager.GetButtonDown("Jump") && !m_Jump && !jetpackMode)
             {
                 m_Jump = true;
+            }
+
+
+            if (jetpackMode)
+            {
+                if (CrossPlatformInputManager.GetButton("Jump") && jetpackThrustTimeLeft > 0)
+                {
+                    if (jetpackThrustTimeLeft > jetpackMinThrustPeriodForActivationInSeconds || m_Thrusting)
+                    {
+                        m_Thrust = true;
+                        jetpackThrustTimeLeft -= Time.deltaTime;
+                        m_Thrusting = true;
+                    }
+                } else
+                    m_Thrusting = false;
+
+                if (!m_Thrusting && jetpackThrustTimeLeft < jetpackContinuousThrustPeriodInSeconds)
+                    jetpackThrustTimeLeft += Time.deltaTime;
             }
         }
 
 
         private void FixedUpdate()
         {
-            GroundCheck();
+            if (!jetpackMode)
+                GroundCheck();
+            else
+                m_IsGrounded = false;
+
+            Debug.Log("No ground check");
+
             Vector2 input = GetInput();
 
-            if ((Mathf.Abs(input.x) > float.Epsilon || Mathf.Abs(input.y) > float.Epsilon) && (advancedSettings.airControl || m_IsGrounded))
+            if ((Mathf.Abs(input.x) > float.Epsilon || Mathf.Abs(input.y) > float.Epsilon || CrossPlatformInputManager.GetButton("Jump")) && (advancedSettings.airControl || m_IsGrounded || jetpackMode))
             {
+                Debug.Log("Control enabled");
                 // always move along the camera forward as it is the direction that it being aimed at
                 Vector3 desiredMove = cam.transform.forward*input.y + cam.transform.right*input.x;
-                desiredMove = Vector3.ProjectOnPlane(desiredMove, m_GroundContactNormal).normalized;
+                if (!jetpackMode)
+                    desiredMove = Vector3.ProjectOnPlane(desiredMove, m_GroundContactNormal).normalized;
+                                    
 
                 desiredMove.x = desiredMove.x*movementSettings.CurrentTargetSpeed;
                 desiredMove.z = desiredMove.z*movementSettings.CurrentTargetSpeed;
                 desiredMove.y = desiredMove.y*movementSettings.CurrentTargetSpeed;
+
+
                 if (m_RigidBody.velocity.sqrMagnitude <
                     (movementSettings.CurrentTargetSpeed*movementSettings.CurrentTargetSpeed))
                 {
                     m_RigidBody.AddForce(desiredMove*SlopeMultiplier(), ForceMode.Impulse);
+                }
+
+                // if jump pressed and jetpack still has thrust, add thrust to jetpack
+                if (m_Thrusting && m_RigidBody.velocity.y < 20)
+                {
+                    m_RigidBody.AddForce(Vector3.up * jetpackThrustForce);
                 }
             }
 
@@ -178,12 +220,13 @@ namespace UnityStandardAssets.Characters.FirstPerson
             else
             {
                 m_RigidBody.drag = 0f;
-                if (m_PreviouslyGrounded && !m_Jumping)
+                if (m_PreviouslyGrounded && !m_Jumping && !jetpackMode)
                 {
                     StickToGroundHelper();
                 }
             }
             m_Jump = false;
+            m_Thrust = false;
         }
 
 
