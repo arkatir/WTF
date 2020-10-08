@@ -50,7 +50,8 @@ public class FishSchool : MonoBehaviour
     {
         if(Random.Range(0,5000) < 50)
         {
-            goal = new Vector3(Random.Range(-goalRange, goalRange), Random.Range(0, goalRange), Random.Range(-goalRange, goalRange));
+            goal = transform.position + Random.insideUnitSphere * Random.Range(-goalRange, goalRange);
+            //goal = new Vector3(Random.Range(-goalRange, goalRange), Random.Range(0, goalRange), Random.Range(-goalRange, goalRange));
         }
     }
 
