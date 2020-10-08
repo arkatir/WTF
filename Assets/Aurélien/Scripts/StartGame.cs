@@ -32,19 +32,26 @@ public class StartGame : MonoBehaviour
         controlsText.gameObject.SetActive(true);
         loadingText.gameObject.SetActive(true);
         loading.gameObject.SetActive(true);
-        //StartCoroutine(LoadGame());
+        StartCoroutine(LoadGame());
     }
 
     IEnumerator LoadGame()
     {
         AsyncOperation result = SceneManager.LoadSceneAsync("Map");
+        result.allowSceneActivation = false;
         while (!result.isDone)
         {
-            float progress = result.progress;
+            float progress = Mathf.Clamp01(result.progress / 0.9f);
             loading.transform.localScale = new Vector3(progress, 1, 1);
             loadingText.text = "Loading : " + (progress * 100) + "%";
-            yield return null;
             Debug.Log(progress);
+            if (result.progress >= 0.9f && Input.GetKeyDown(KeyCode.Space))
+            {
+                result.allowSceneActivation = true;
+            }
+            yield return null;
         }
+        
+        
     }
 }
