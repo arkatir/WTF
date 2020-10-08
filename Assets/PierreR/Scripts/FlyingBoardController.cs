@@ -28,7 +28,7 @@ public class FlyingBoardController : SlotItem
 
         RigidbodyFirstPersonController script = player.GetComponent<RigidbodyFirstPersonController>();
         if (script != null)
-            script.jetpackMode = true;
+            script.SetJetpackMode(true);
     }
 
     public override void OnRemove()
@@ -41,6 +41,6 @@ public class FlyingBoardController : SlotItem
 
         RigidbodyFirstPersonController script = player.GetComponent<RigidbodyFirstPersonController>();
         if (script != null)
-            script.jetpackMode = false;
+            script.SetJetpackMode(false);
     }
 }
