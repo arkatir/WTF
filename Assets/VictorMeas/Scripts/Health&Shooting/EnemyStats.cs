@@ -53,7 +53,8 @@ public class EnemyStats : MonoBehaviour
             {
                 autoDestroy.beginExplosion();
             }
-            
+
+            Player.Get().IncreaseScore(1);
         }
         else
         {
