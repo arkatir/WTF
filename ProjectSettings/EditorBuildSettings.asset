@@ -17,4 +17,10 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Alex/tEST.unity
     guid: a797881d0e47aca4c8d28910d6b3237d
+  - enabled: 1
+    path: "Assets/Aur\xE9lien/TitleScene.unity"
+    guid: 873a4462a1830a945a95b06af10690b5
+  - enabled: 1
+    path: "Assets/Aur\xE9lien/LoadTest.unity"
+    guid: fcffc159271409e41bcc73bd98ded7ef
   m_configObjects: {}
