@@ -38,17 +38,11 @@ public class StartGame : MonoBehaviour
     IEnumerator LoadGame()
     {
         AsyncOperation result = SceneManager.LoadSceneAsync("Map");
-        result.allowSceneActivation = false;
         while (!result.isDone)
         {
-            float progress = Mathf.Clamp01(result.progress / 0.9f);
+            float progress = Mathf.Clamp01(result.progress);
             loading.transform.localScale = new Vector3(progress, 1, 1);
             loadingText.text = "Loading : " + (progress * 100) + "%";
-            Debug.Log(progress);
-            if (result.progress >= 0.9f && Input.GetKeyDown(KeyCode.Space))
-            {
-                result.allowSceneActivation = true;
-            }
             yield return null;
         }
         

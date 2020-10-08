@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityStandardAssets.Characters.FirstPerson;
 
+//on hérite de la classe SlotItem la licorne est considérer comme un slot de véhicule
 public class Unicorn : SlotItem
 {
     private float timerDisable;
@@ -9,7 +10,7 @@ public class Unicorn : SlotItem
     public Transform handle;
     private float runMultBase;
 
-    // Start is called before the first frame update
+
     void Start()
     {
         player = GameObject.Find("Player");
@@ -23,6 +24,7 @@ public class Unicorn : SlotItem
         timerDisable -= Time.deltaTime;
     }
 
+    //on surcharge la méthode Virtual OnInsert en mettant le Override pour pouvoir récupérer cette méthode de notre classe fille
     public override void OnInsert()
     {
         if (timerDisable > 0) return;
@@ -37,6 +39,7 @@ public class Unicorn : SlotItem
         cam.transform.position += Vector3.up * 1.2f;
         runMultBase = player.GetComponent<RigidbodyFirstPersonController>().movementSettings.RunMultiplier;
         player.GetComponent<RigidbodyFirstPersonController>().movementSettings.RunMultiplier = 5;
+        //on récupère notre laser et on l'active que lorsque l'on est sur la licorne
         GetComponent<LaserUnicorn>().enabled = true;
 
 
@@ -44,8 +47,9 @@ public class Unicorn : SlotItem
    
     public override void OnRemove()
     {
+        //on met un timer pour éviter de retourner directement sur la licorne
         timerDisable = 2;
-        //on jette la licorn
+        //on jette la licorne
         rb.transform.position = rb.transform.position + rb.transform.forward * 1;
         rb.isKinematic = false;
         player.SetActive(true);
@@ -55,6 +59,7 @@ public class Unicorn : SlotItem
         GetComponent<MeshCollider>().enabled = true;
         transform.parent.parent = null;
         player.GetComponent<RigidbodyFirstPersonController>().movementSettings.RunMultiplier = runMultBase;
+        //on désactive les effets du laser si on est plus sur la licorne
         GetComponent<LaserUnicorn>().enabled = false;
     }
 
