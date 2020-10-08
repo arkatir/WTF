@@ -1,0 +1,24 @@
+fileFormatVersion: 2
+guid: dc52413239ab2a849b68945d181a0fe2
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontNames:
+  - Chromia Supercap Condensed
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: 274f85e2f84fca642a2e76076a90a619, type: 3}
+  - {fileID: 12800000, guid: 0397aad5403ad304da5b85fbf9b8c1c2, type: 3}
+  - {fileID: 12800000, guid: 9b9e6418fc04862438ae96c82e46ffa5, type: 3}
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  useLegacyBoundsCalculation: 0
+  shouldRoundAdvanceValue: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
