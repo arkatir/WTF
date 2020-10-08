@@ -17,6 +17,8 @@ public class flarebullet : MonoBehaviour
     private bool teleport = true;
     public Object marker;
 
+    public Transform debugtr;
+
 
     // Use this for initialization
     void Start()
@@ -31,7 +33,7 @@ public class flarebullet : MonoBehaviour
 
 
         Destroy(gameObject, flareTimer + 1f);
-
+        debugtr = GameObject.Find("Marker").transform;
 
     }
 
@@ -69,24 +71,66 @@ public class flarebullet : MonoBehaviour
     }
     public void OnCollisionEnter(Collision collision)
     {
-        Debug.Log("Collision");
 
-        bool enoughspace = false;
 
-  
-        if (Physics.CheckCapsule(collision.contacts[0].point + (collision.contacts[0].normal * 0.6f), collision.contacts[0].point + (collision.contacts[0].normal * .6f) + Vector3.up*1.6f, 0.5f) == true)
-        {
-           enoughspace = true;
-        }
+
+
+
+
+
+
+        /*float maxY = float.NegativeInfinity;
         
-    
+        for(int i=0;i< collision.contactCount; i++)
+        {
+            float val = Vector3.Dot(collision.contacts[i].normal, collision.contacts[i].point - );
+            if (maxY < val)
+            {
+                iBestpoint = i;
+                maxY = val;
+
+                Debug.Log("test " + collision.contacts[i].normal + " " + val);
+            }
+                
+        }
+
+        Debug.Log("best  " + iBestpoint);*/
+
+
+        int iBestpoint = -1;
+        bool enoughspace = true;
+        for (int i = 0; i < collision.contactCount; i++)
+        {
+            enoughspace = true;
+            RaycastHit[] hits = Physics.SphereCastAll(collision.contacts[i].point + (collision.contacts[i].normal * 1.0f), 0.5f, Vector3.up, 0.01f);
+
+            foreach (RaycastHit hit in hits)
+            {
+                if (hit.transform != this.transform)
+                {
+                    enoughspace = false;
+                    Debug.Log("NAAAAAAAAAN " + collision.contactCount + " " + hit.transform.gameObject.name);
+                    debugtr.position = collision.contacts[i].point;
+                }
+
+            }
+            if (enoughspace)
+            {
+                iBestpoint = i;
+            }
+        }
+
+
         if (teleport && enoughspace)
         {
 
            
-            Player.position = collision.contacts[0].point + (collision.contacts[0].normal * .6f);
+            Player.position = collision.contacts[iBestpoint].point + (collision.contacts[iBestpoint].normal * .6f);
 
         }
+
+        Destroy(this.gameObject);
+       
        teleport = false;
     }
 

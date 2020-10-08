@@ -204,9 +204,9 @@ MonoBehaviour:
   flareShotSound: {fileID: 8300000, guid: 0f01458ab91c1ac4883d0e6e549bff26, type: 3}
   noAmmoSound: {fileID: 8300000, guid: 33b4f082caddfbd479b447561a4339b4, type: 3}
   reloadSound: {fileID: 8300000, guid: 83c52e0124588cb41b7c1c200f457a50, type: 3}
-  bulletSpeed: 1000
-  maxSpareRounds: 1000
-  spareRounds: 1000
+  bulletSpeed: 3000
+  maxSpareRounds: 10000000
+  spareRounds: 10000000
   currentRound: 1
   xRotationToPlayer: -5
   yRotationToPlayer: -169
