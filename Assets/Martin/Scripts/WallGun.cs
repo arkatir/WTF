@@ -21,16 +21,21 @@ public class WallGun : SlotItem
     {
         if (_held)
         {
-            if (Input.GetMouseButton(0))
+            if (Physics.Raycast(transform.parent.position, transform.parent.forward, out RaycastHit hitInfo))
             {
-                if (Time.time >= _lastShot + minIntervalBetweenShots)
+                Crosshairs.Get().SetColor(Color.green);
+                if (Input.GetMouseButton(0))
                 {
-                    if (Physics.Raycast(transform.parent.position, transform.parent.forward, out RaycastHit hitInfo))
+                    if (Time.time >= _lastShot + minIntervalBetweenShots)
                     {
                         ObjectPoolManager.managerInstance.CreateObject(projectileName, hitInfo.point + Vector3.up * 2, Quaternion.identity);
                         _lastShot = Time.time;
                     }
                 }
+            }
+            else
+            {
+                Crosshairs.Get().SetColor(Color.red);
             }
         }
         else
@@ -54,5 +59,6 @@ public class WallGun : SlotItem
         transform.SetParent(null);
         transform.position = new Vector3(newPos.x, 1, newPos.z);
         transform.localRotation = Quaternion.identity;
+        Crosshairs.Get().ResetColor();
     }
 }
