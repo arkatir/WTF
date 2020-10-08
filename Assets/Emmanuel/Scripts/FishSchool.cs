@@ -31,6 +31,7 @@ public class FishSchool : MonoBehaviour
         for (int i = 0; i < fishNumber; i++)
         {
             Vector3 startPosition = new Vector3(Random.Range(-initRange, initRange), Random.Range(-initRange, initRange), Random.Range(-initRange, initRange));
+            //ObjectPoolManager.managerInstance.CreateObject(fishPrefab.name, startPosition, Quaternion.identity);
             fishSchool[i] = (GameObject)Instantiate(fishPrefab, startPosition, Quaternion.identity);
         }
     }

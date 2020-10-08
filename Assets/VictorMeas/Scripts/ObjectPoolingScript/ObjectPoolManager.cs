@@ -89,7 +89,6 @@ public class ObjectPoolManager : MonoBehaviour
             return null;
         }
     }
-
     public void RemoveObject(GameObject obj)
     {
         string chosenName = (obj.name).Replace("(Clone)", "");
