@@ -3,7 +3,7 @@
 public class FlyingThing : MonoBehaviour
 {
     private MaterialPropertyBlock _properties;
-    private Color _baseColor;
+    private Color _emissionColor;
     private MeshRenderer _renderer;
 
     // Start is called before the first frame update
@@ -12,12 +12,12 @@ public class FlyingThing : MonoBehaviour
         _properties = new MaterialPropertyBlock();
         _renderer = GetComponentInChildren<MeshRenderer>();
         _renderer.GetPropertyBlock(_properties);
-        _baseColor = _properties.GetColor("_BaseColor");
+        _emissionColor = _properties.GetColor("_EmissionColor");
     }
 
     public void Tint(Color color, float factor)
     {
-        _properties.SetColor("_BaseColor", Color.Lerp(_baseColor, color, factor));
+        _properties.SetColor("_EmissionColor", Color.Lerp(_emissionColor, color, factor));
         _renderer.SetPropertyBlock(_properties);
     }
 }
