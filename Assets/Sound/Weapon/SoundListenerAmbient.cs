@@ -30,7 +30,7 @@ public class SoundListenerAmbient : MonoBehaviour
     private UnityAction reloadListener;
     private UnityAction mushroomDieListener;
     private UnityAction explosionListener;
-
+    private UnityAction throwListener;
     void Awake()
     {
         machineGunListener = new UnityAction(PlayShootGun); 
@@ -74,6 +74,7 @@ public class SoundListenerAmbient : MonoBehaviour
         EventManager.StopListening("explosion", explosionListener);
     }
 
+
     private void PlayShootGun()
     {
         audiosrc.PlayOneShot(machineGun);
@@ -84,7 +85,7 @@ public class SoundListenerAmbient : MonoBehaviour
     }
     private void PlayShootUnicorn()
     {
-        audiosrc.PlayOneShot(unicorn);
+        audiosrc.PlayOneShot(unicorn, 0.1f);
     }
     private void PlayShootGunMartin1()
     {

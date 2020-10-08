@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.Events;
 using UnityEngine;
 
 /// <summary>
@@ -91,6 +92,7 @@ public class EnemyStats : MonoBehaviour
         }
         if (m_EnemyAnimator)
         {
+            EventManager.TriggerEvent("mushroomDie");
             m_EnemyAnimator.SetTrigger("Death"); //launch death anim
                                                  //Fetch the current Animation clip information for the base layer
             var m_CurrentClipInfo = m_EnemyAnimator.GetCurrentAnimatorClipInfo(0);
