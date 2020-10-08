@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.UI;
 using UnityEngine;
 
 public class MachineGunController : SlotItem
@@ -16,6 +17,8 @@ public class MachineGunController : SlotItem
     private Rigidbody playerRb;
 
     //Gun info
+
+    public GameObject bulletCountText;
     public GameObject projectileToShoot;
     public Transform shootingOriginPoint;
     public Transform farAwayDirection;
@@ -46,6 +49,7 @@ public class MachineGunController : SlotItem
             TransmitSpeed();
             CheckShoot();
             CheckReload();
+            CheckBulletText();
         }
         
     }
@@ -59,6 +63,11 @@ public class MachineGunController : SlotItem
             gunAnimator.SetFloat("SpeedX", speedX);
             gunAnimator.SetFloat("SpeedZ", speedZ);
         }
+    }
+
+    public void CheckBulletText()
+    {
+        bulletCountText.GetComponent<Text>().text = currentBullets.ToString() + " / " + maxBullets.ToString();
     }
 
     public void CheckShoot()
@@ -120,6 +129,7 @@ public class MachineGunController : SlotItem
 
     public override void OnInsert()
     {
+        bulletCountText.SetActive(true);
         isReloading = false;
         playerRb = Camera.main.transform.parent.GetComponent<Rigidbody>();
         GetComponent<Rigidbody>().isKinematic = true;
@@ -133,6 +143,7 @@ public class MachineGunController : SlotItem
     public override void OnRemove()
     {
         StopAllCoroutines();
+        bulletCountText.SetActive(false);
         currentBullets = maxBullets;
         selected = false;
         transform.SetParent(null);
