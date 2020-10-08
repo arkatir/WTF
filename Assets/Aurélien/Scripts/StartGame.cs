@@ -10,7 +10,8 @@ public class StartGame : MonoBehaviour
     public Button button;
     public Text titleText;
     public Text controlsText;
-    private bool controls = false;
+    public Text loadingText;
+    public Image loading;
 
     // Start is called before the first frame update
     void Start()
@@ -21,11 +22,7 @@ public class StartGame : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetMouseButtonDown(0) && controls)
-        {
-            controlsText.gameObject.SetActive(false);
-            SceneManager.LoadScene("Map");
-        }
+        
     }
 
     public void Controls()
@@ -33,6 +30,21 @@ public class StartGame : MonoBehaviour
         titleText.gameObject.SetActive(false);
         button.gameObject.SetActive(false);
         controlsText.gameObject.SetActive(true);
-        controls = true;
+        loadingText.gameObject.SetActive(true);
+        loading.gameObject.SetActive(true);
+        StartCoroutine(LoadGame());
+    }
+
+    IEnumerator LoadGame()
+    {
+        AsyncOperation result = SceneManager.LoadSceneAsync("Map");
+        while (!result.isDone)
+        {
+            float progress = result.progress;
+            loading.fillAmount = progress;
+            loadingText.text = "Loading : " + (progress * 100) + "%";
+            yield return null;
+            Debug.Log(progress);
+        }
     }
 }
