@@ -5,19 +5,15 @@ using UnityEngine;
 public class PlayerStats : MonoBehaviour
 {
     // Start is called before the first frame update
-<<<<<<< Updated upstream
     [SerializeField]
     private int maxHealth;
     [SerializeField]
     private int health;
-=======
->>>>>>> Stashed changes
     void Start()
     {
         
     }
 
-<<<<<<< Updated upstream
     public void AddHealth(int val)
     {
         health += val;
@@ -48,8 +44,6 @@ public class PlayerStats : MonoBehaviour
         return health;
     }
 
-=======
->>>>>>> Stashed changes
     // Update is called once per frame
     void Update()
     {
