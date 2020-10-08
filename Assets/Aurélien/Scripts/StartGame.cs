@@ -32,7 +32,7 @@ public class StartGame : MonoBehaviour
         controlsText.gameObject.SetActive(true);
         loadingText.gameObject.SetActive(true);
         loading.gameObject.SetActive(true);
-        StartCoroutine(LoadGame());
+        //StartCoroutine(LoadGame());
     }
 
     IEnumerator LoadGame()

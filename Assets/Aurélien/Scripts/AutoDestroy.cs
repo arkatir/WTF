@@ -5,11 +5,11 @@ using UnityEngine;
 public class AutoDestroy : MonoBehaviour
 {
     public GameObject target;
-    private float explosionRadius = 5.0f;
-    private float explosionForce = 100000.0f;
-    private float propulsion = 300.0f;
+    private float explosionRadius = 7.0f;
+    private float explosionForce = 15000.0f;
+    private float propulsion = 500.0f;
     private bool moving = true;
-    private bool exploding = false;
+    public bool exploding = false;
     private Rigidbody rb;
     public float speedCap;
     public float timer;
@@ -31,10 +31,7 @@ public class AutoDestroy : MonoBehaviour
         Vector3 direction = target.transform.position - transform.position;
         if(direction.magnitude < 1.5f)
         {
-            exploding = true;
-            moving = false;
-            rb.velocity = Vector3.zero;
-            rb.isKinematic = true;
+            beginExplosion();
         }
         else if (moving)
         {
@@ -74,7 +71,7 @@ public class AutoDestroy : MonoBehaviour
     IEnumerator WaitResume()
     {
         moving = false;
-        yield return new WaitForSeconds(2.5f);
+        yield return new WaitForSeconds(1.0f);
         moving = true;
     }
 
@@ -100,6 +97,14 @@ public class AutoDestroy : MonoBehaviour
         }
         Instantiate(explosion, transform.position, explosion.transform.rotation);
         Destroy(gameObject);
+    }
+
+    public void beginExplosion()
+    {
+        exploding = true;
+        moving = false;
+        rb.velocity = Vector3.zero;
+        rb.isKinematic = true;
     }
 
     

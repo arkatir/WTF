@@ -35,7 +35,7 @@ public class SpawnAutoDestroy : MonoBehaviour
                 GameObject spawn = Instantiate(autoDestroyPrefab, spawnPos.transform.position + spawnOffset, autoDestroyPrefab.transform.rotation);
                 autoDestroy = spawn.GetComponent<AutoDestroy>();
                 autoDestroy.target = other.gameObject;
-                autoDestroy.speedCap = 2 * Mathf.Sqrt(spawnNumber);
+                autoDestroy.speedCap = 4 * Mathf.Sqrt(spawnNumber);
                 autoDestroy.timer = Random.Range(2.5f, 3.5f);
                 spawnPos.transform.RotateAround(transform.position, Vector3.up, spawnAngle);
             }
