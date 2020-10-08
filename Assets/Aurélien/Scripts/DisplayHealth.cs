@@ -2,22 +2,21 @@
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.UI;
 
 public class DisplayHealth : MonoBehaviour
 {
     private PlayerStats playerstats;
-    private TextMeshProUGUI tmp;
 
     // Start is called before the first frame update
     void Start()
     {
         playerstats = GetComponentInParent<PlayerStats>();
-        tmp = GetComponent<TextMeshProUGUI>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        tmp.text = "Health : " + playerstats.GetHealth();
+        transform.localScale =new Vector3((float)playerstats.GetHealth() / (float)playerstats.GetMaxHealth(), 1.0f, 1.0f);
     }
 }

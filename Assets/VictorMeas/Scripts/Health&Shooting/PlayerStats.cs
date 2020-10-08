@@ -38,6 +38,11 @@ public class PlayerStats : MonoBehaviour
         return health;
     }
 
+    public int GetMaxHealth()
+    {
+        return maxHealth;
+    }
+
     public int SetHealth(int val)
     {
         health = val;
