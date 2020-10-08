@@ -31,6 +31,7 @@ public class StraightProjectile : MonoBehaviour
     private void OnEnable()
     {
         tr = this.GetComponent<TrailRenderer>();
+        rb = this.GetComponent<Rigidbody>();
         currentSpeed = projectileSpeed;
         rb.velocity = Vector3.zero;
         rb.velocity = transform.forward * currentSpeed;
