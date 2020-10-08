@@ -31,7 +31,6 @@ public class FlyingThings : MonoBehaviour
         Bounds bounds = new Bounds(transform.position, dimensions);
         for (int i = 0; i < _things.Length; i++)
         {
-            //Debug.DrawLine(_things[i].transform.position, _things[i].transform.position + _things[i].transform.forward, Color.red);
             Vector3 newPos = _things[i].transform.position + _things[i].transform.forward * thingSpeed * Time.deltaTime;
             if (bounds.Contains(newPos))
             {
@@ -39,7 +38,6 @@ public class FlyingThings : MonoBehaviour
             }
             else
             {
-                //_things[i].transform.rotation = Quaternion.Inverse(_things[i].transform.rotation);
                 _things[i].transform.LookAt(_things[i].transform.position - _things[i].transform.forward);
             }
         }
@@ -48,8 +46,6 @@ public class FlyingThings : MonoBehaviour
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.cyan;
-        //Gizmos.matrix = transform.localToWorldMatrix;
-        //Gizmos.DrawWireCube(Vector3.zero, dimensions);
         Gizmos.DrawWireCube(transform.position, dimensions);
     }
 }
