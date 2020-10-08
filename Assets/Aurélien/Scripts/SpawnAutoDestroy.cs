@@ -27,10 +27,10 @@ public class SpawnAutoDestroy : MonoBehaviour
     {
         if (other.CompareTag("Player") && active)
         {
-            float spawnRadius = (Mathf.Min(spawnNumber, 10) - 1) / 2;
-            float spawnAngle = (360) / Mathf.Min(spawnNumber, 10);
+            float spawnRadius = (Mathf.Min(spawnNumber, 15) - 1) / 2;
+            float spawnAngle = (360) / Mathf.Min(spawnNumber, 15);
             spawnPos.transform.position = new Vector3(spawnRadius, 0, 0) + transform.position;
-            for (int i = 0; i < Mathf.Min(spawnNumber, 10); i++)
+            for (int i = 0; i < Mathf.Min(spawnNumber, 15); i++)
             {
                 GameObject spawn = Instantiate(autoDestroyPrefab, spawnPos.transform.position + spawnOffset, autoDestroyPrefab.transform.rotation);
                 autoDestroy = spawn.GetComponent<AutoDestroy>();
@@ -52,7 +52,7 @@ public class SpawnAutoDestroy : MonoBehaviour
     IEnumerator Deactivate()
     {
         active = false;
-        yield return new WaitForSeconds(5);
+        yield return new WaitForSeconds(3);
         active = true;
     }
 }
