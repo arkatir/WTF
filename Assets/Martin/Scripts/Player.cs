@@ -1,8 +1,12 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 
 public class Player : MonoBehaviour
 {
+    public Text scoreText;
+
     private static Player _instance;
+    private int _score;
 
     public static Player Get()
     {
@@ -15,9 +19,9 @@ public class Player : MonoBehaviour
         _instance = this;
     }
 
-    // Update is called once per frame
-    void Update()
+    public void IncreaseScore(int count)
     {
-        
+        _score += count;
+        scoreText.text = "Score : " + _score;
     }
 }
