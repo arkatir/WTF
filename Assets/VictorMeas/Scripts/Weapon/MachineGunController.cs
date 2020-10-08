@@ -72,6 +72,7 @@ public class MachineGunController : SlotItem
 
     public void CheckShoot()
     {
+        Debug.DrawRay(Camera.main.transform.position, Camera.main.transform.forward, Color.white);
         if (isReloading == false)
         {
             if (Input.GetMouseButton(0) && (currentTime > rateOfFire) && (currentBullets > 0))
