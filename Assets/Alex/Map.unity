@@ -16234,7 +16234,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 7809342662015983164, guid: b63f864cdb66e444596e9079c1145aea, type: 3}
       propertyPath: goalRange
-      value: 100
+      value: 101
       objectReference: {fileID: 0}
     - target: {fileID: 7809342662015983164, guid: b63f864cdb66e444596e9079c1145aea, type: 3}
       propertyPath: PlayerDetectionDistance
@@ -16244,13 +16244,21 @@ PrefabInstance:
       propertyPath: initRange
       value: 100
       objectReference: {fileID: 0}
+    - target: {fileID: 7809342662015983164, guid: b63f864cdb66e444596e9079c1145aea, type: 3}
+      propertyPath: initRangeX
+      value: 40
+      objectReference: {fileID: 0}
     - target: {fileID: 7809342662015983165, guid: b63f864cdb66e444596e9079c1145aea, type: 3}
       propertyPath: m_Name
       value: fishSchool
       objectReference: {fileID: 0}
+    - target: {fileID: 7809342662015983165, guid: b63f864cdb66e444596e9079c1145aea, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7809342662015983167, guid: b63f864cdb66e444596e9079c1145aea, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -510.5
+      value: -515.8
       objectReference: {fileID: 0}
     - target: {fileID: 7809342662015983167, guid: b63f864cdb66e444596e9079c1145aea, type: 3}
       propertyPath: m_LocalPosition.y
@@ -16258,7 +16266,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7809342662015983167, guid: b63f864cdb66e444596e9079c1145aea, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 24.7
+      value: -20.9
       objectReference: {fileID: 0}
     - target: {fileID: 7809342662015983167, guid: b63f864cdb66e444596e9079c1145aea, type: 3}
       propertyPath: m_LocalRotation.x
