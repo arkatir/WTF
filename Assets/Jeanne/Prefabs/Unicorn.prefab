@@ -5353,8 +5353,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   angleAim: 30
-  damage: 10
-  fireTime: 10
+  damage: 80
+  fireTime: 0
 --- !u!1 &6032673859347103099
 GameObject:
   m_ObjectHideFlags: 0

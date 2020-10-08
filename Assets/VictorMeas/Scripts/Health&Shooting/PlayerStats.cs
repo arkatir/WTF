@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PlayerStats : MonoBehaviour
 {
+    public GameObject gameOverUI;
     // Start is called before the first frame update
     [SerializeField]
     private int maxHealth;
@@ -25,6 +26,7 @@ public class PlayerStats : MonoBehaviour
         if (removedVal < 0)
         {
             health = 0;
+            gameOverUI.SetActive(true);
         }
         else
         {

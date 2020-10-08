@@ -221,14 +221,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: MachineGun
       objectReference: {fileID: 0}
-    - target: {fileID: 4223279233134720526, guid: 345183bf6b70d0d4586b7733d3634818, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 1.77
-      objectReference: {fileID: 0}
-    - target: {fileID: 4223279233134720526, guid: 345183bf6b70d0d4586b7733d3634818, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 1.19
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 345183bf6b70d0d4586b7733d3634818, type: 3}
 --- !u!1 &652164248

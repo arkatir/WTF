@@ -36,7 +36,7 @@ public class EnemyStats : MonoBehaviour
     public void RemoveHealth(float val)
     {
         float removedVal = health - val;
-        if (removedVal < 0)
+        if (removedVal <= 0)
         {
             health = 0;
             if (m_EnemyController)
