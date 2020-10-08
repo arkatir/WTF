@@ -4,23 +4,34 @@ using UnityEngine;
 
 public class FishSchool : MonoBehaviour
 {
-    public float initRange = 10;
-    public float range = 40;
+    private static FishSchool instance = null;
+    public static FishSchool sharedInstance 
+    { 
+        get
+        {
+            if (instance==null)
+            {
+                instance = GameObject.FindObjectOfType<FishSchool>();
+            }
+            return instance;
+        } 
+    }
 
+    public float initRange = 10;
+    public float goalRange = 40;
+    public float PlayerDetectionDistance = 15;
     public GameObject fishPrefab;
     public int fishNumber = 10;
-    public static GameObject[] fishSchool { get; set; }
+    public GameObject[] fishSchool;
 
     public static Vector3 goal = Vector3.zero;
 
-    // Start is called before the first frame update
     void Start()
     {
         fishSchool = new GameObject[fishNumber];
         InstantiateSchool();
     }
 
-    // Update is called once per frame
     void Update()
     {
         ChangeGoal();
@@ -30,8 +41,7 @@ public class FishSchool : MonoBehaviour
     {
         for (int i = 0; i < fishNumber; i++)
         {
-            Vector3 startPosition = new Vector3(Random.Range(-initRange, initRange), Random.Range(-initRange, initRange), Random.Range(-initRange, initRange));
-            //ObjectPoolManager.managerInstance.CreateObject(fishPrefab.name, startPosition, Quaternion.identity);
+            Vector3 startPosition = transform.position + Random.insideUnitSphere * Random.Range(-initRange, initRange);
             fishSchool[i] = (GameObject)Instantiate(fishPrefab, startPosition, Quaternion.identity);
         }
     }
@@ -40,7 +50,12 @@ public class FishSchool : MonoBehaviour
     {
         if(Random.Range(0,5000) < 50)
         {
-            goal = new Vector3(Random.Range(-range, range), Random.Range(-range, range), Random.Range(-range, range));
+            goal = new Vector3(Random.Range(-goalRange, goalRange), Random.Range(0, goalRange), Random.Range(-goalRange, goalRange));
         }
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.DrawWireSphere(transform.position, initRange);
     }
 }
