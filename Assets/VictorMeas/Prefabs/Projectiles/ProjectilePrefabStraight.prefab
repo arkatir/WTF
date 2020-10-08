@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: -8267594895455887983}
   - component: {fileID: 5407513556144775103}
   - component: {fileID: 2179225067161265999}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: ProjectilePrefabStraight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -76,7 +76,7 @@ TrailRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Time: 0.53
+  m_Time: 0.3
   m_Parameters:
     serializedVersion: 3
     widthMultiplier: 1
@@ -84,8 +84,8 @@ TrailRenderer:
       serializedVersion: 2
       m_Curve:
       - serializedVersion: 3
-        time: 0
-        value: 0.10144933
+        time: 0.0043754578
+        value: 0.04882177
         inSlope: -0.2235367
         outSlope: -0.2235367
         tangentMode: 0
@@ -93,7 +93,7 @@ TrailRenderer:
         inWeight: 0.33333334
         outWeight: 0.1693189
       - serializedVersion: 3
-        time: 0.9955639
+        time: 1
         value: 0
         inSlope: 0
         outSlope: 0
@@ -154,8 +154,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c762ebe6f187b34db5ee8d45d229dae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  projectileSpeed: 25
-  damage: 10
+  projectileSpeed: 40
+  damage: 20
   targetToHit: 1
   hitPrefab: {fileID: 0}
   timeToDeactivate: 3
@@ -187,7 +187,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
 --- !u!1 &7035491108091696738
 GameObject:
   m_ObjectHideFlags: 0
@@ -199,7 +199,7 @@ GameObject:
   - component: {fileID: 3790288544425139826}
   - component: {fileID: 1676555440229207110}
   - component: {fileID: 4541212525829766119}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Sphere
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -215,7 +215,7 @@ Transform:
   m_GameObject: {fileID: 7035491108091696738}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.1901239, y: 0.1901239, z: 0.1901239}
+  m_LocalScale: {x: 0.08597403, y: 0.08597403, z: 0.08597403}
   m_Children: []
   m_Father: {fileID: 1320716786197715942}
   m_RootOrder: 0

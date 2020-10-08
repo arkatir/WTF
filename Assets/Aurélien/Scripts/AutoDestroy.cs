@@ -87,7 +87,7 @@ public class AutoDestroy : MonoBehaviour
             GameObject obj = col[i].gameObject;
             if (obj.GetComponent<PlayerStats>() != null)
             {
-                obj.GetComponent<PlayerStats>().RemoveHealth(1);
+                obj.GetComponent<PlayerStats>().RemoveHealth(10);
             }
             if (obj.GetComponent<Rigidbody>() != null)
             {
