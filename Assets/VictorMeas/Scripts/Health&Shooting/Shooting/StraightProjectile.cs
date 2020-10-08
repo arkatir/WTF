@@ -9,6 +9,8 @@ public class StraightProjectile : MonoBehaviour
     [SerializeField]
     private float projectileSpeed; //Not susceptible to change during runtime           
     private float currentSpeed;
+    private Rigidbody rb;
+    private TrailRenderer tr;
     #endregion
 
     #region Public attributes
@@ -16,6 +18,8 @@ public class StraightProjectile : MonoBehaviour
     public directedTowards targetToHit; //To know if we have to call player health script or enemy health script
     public GameObject hitPrefab; //Instantiate hit particle effect object on hitting something
     public int timeToDeactivate;
+
+   
     #endregion
     // Start is called before the first frame update
     void Start()
@@ -26,21 +30,25 @@ public class StraightProjectile : MonoBehaviour
 
     private void OnEnable()
     {
+        tr = this.GetComponent<TrailRenderer>();
+        rb = this.GetComponent<Rigidbody>();
         currentSpeed = projectileSpeed;
+        rb.velocity = Vector3.zero;
+        rb.velocity = transform.forward * currentSpeed;
+        //tr.enabled = true;
         StartCoroutine(CountdownToDeactivate());
+    }
+
+    private void OnDisable()
+    {
+        tr.enabled = false;
+        rb.velocity = Vector3.zero;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(currentSpeed != 0)
-        {
-            transform.position += transform.forward * (currentSpeed * Time.deltaTime);
-        }
-        else
-        {
-            Debug.LogWarning("Projectile has no ascribed speed in editor!");
-        }
+        
     }
 
     private void OnCollisionEnter(Collision other)
