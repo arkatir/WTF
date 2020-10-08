@@ -11,7 +11,7 @@ public class MachineGunController : SlotItem
     public float xRotationToPlayer = 5.359f;
     public float yRotationToPlayer = -88.231f;
     public float zRotationToPlayer = -4.898f;
-    public Vector3 positionToPlayer = new Vector3(1.029f, -1.401f, 2.639f);
+    public Vector3 positionToPlayer = new Vector3(0.525f, -1.166f, 0.708f);
 
     private Rigidbody playerRb;
 
@@ -24,6 +24,7 @@ public class MachineGunController : SlotItem
     public float rateOfFire = 0.5f;
     private float currentTime;
     private string projectileName;
+    private int layerMask;
     //Animator
     public Animator gunAnimator;
     public ParticleSystem psMuzzle;
@@ -31,6 +32,7 @@ public class MachineGunController : SlotItem
 
     void Start()
     {
+        layerMask = 1 << 9;
         rotationToPlayer = Quaternion.Euler(xRotationToPlayer, yRotationToPlayer, zRotationToPlayer);
         projectileName = projectileToShoot.name;
         farAwayDirection = Camera.main.transform.GetChild(0);
@@ -66,7 +68,7 @@ public class MachineGunController : SlotItem
             if (Input.GetMouseButton(0) && (currentTime > rateOfFire) && (currentBullets > 0))
             {
                 RaycastHit HitInfo;
-                if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out HitInfo, 1000.0f))
+                if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out HitInfo, Mathf.Infinity, layerMask))
                 {
                     shootingOriginPoint.LookAt(HitInfo.point);
                     ObjectPoolManager.managerInstance.CreateObject(projectileName, shootingOriginPoint.position, shootingOriginPoint.rotation);

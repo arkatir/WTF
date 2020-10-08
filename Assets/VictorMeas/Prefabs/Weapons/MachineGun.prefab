@@ -5071,7 +5071,7 @@ MonoBehaviour:
   xRotationToPlayer: 5.359
   yRotationToPlayer: -88.231
   zRotationToPlayer: -4.893
-  positionToPlayer: {x: 1.029, y: -1.401, z: 2.639}
+  positionToPlayer: {x: 0.525, y: -1.166, z: 0.708}
   projectileToShoot: {fileID: 1320716786197715938, guid: 340961b4ea6fa394a9a45c23f27ec621, type: 3}
   shootingOriginPoint: {fileID: 4223279233134720526}
   farAwayDirection: {fileID: 0}
