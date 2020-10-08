@@ -141,6 +141,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   angleAim: 30
+  damage: 10
 --- !u!1 &565589152
 GameObject:
   m_ObjectHideFlags: 0
