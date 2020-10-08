@@ -14,6 +14,7 @@ public class FlyingThings : MonoBehaviour
     public float thingSpeed = 1f;
     public Color tintColor = Color.red;
     public Pattern pattern;
+    public bool randomScale = true;
 
     private FlyingThing[] _things;
     //private float[] _speeds;
@@ -66,7 +67,10 @@ public class FlyingThings : MonoBehaviour
                     _things[i].transform.LookAt(_things[i].transform.position + (_things[i].transform.forward.y >= 0f ? -Vector3.up : Vector3.up));
                 }                
             }
-            _things[i].transform.localScale = (1.5f + 0.5f * Mathf.Sin(Time.time)) * Vector3.one;
+            if (randomScale)
+            {
+                _things[i].transform.localScale = (1.5f + 0.5f * Mathf.Sin(Time.time)) * Vector3.one;
+            }
             _things[i].Tint(tintColor, 0.5f + 0.5f * Mathf.Sin(Time.time));
         }
     }

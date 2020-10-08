@@ -107,7 +107,7 @@ MonoBehaviour:
   deltaDistance: 1
   xRotationToPlayer: -14.127
   yRotationToPlayer: -20.579
-  positionToPlayer: {x: 0.9, y: -1.1, z: 1.3}
+  positionToPlayer: {x: 1.04, y: -0.8, z: 1.3}
   objectHoldInitialDistance: 5
   objectHoldMinDistance: 3
   objectHoldDragSpeed: 6

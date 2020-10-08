@@ -48,3 +48,5 @@ MonoBehaviour:
   thingCount: 10
   thingSpeed: 5
   tintColor: {r: 1, g: 0.9478378, b: 0, a: 1}
+  pattern: 0
+  randomScale: 1
