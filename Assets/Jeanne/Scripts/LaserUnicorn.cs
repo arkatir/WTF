@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.Events;
 
 public class LaserUnicorn : MonoBehaviour
 
@@ -39,6 +40,7 @@ public class LaserUnicorn : MonoBehaviour
                     //attaquer l'ennemi enlever 10 dégats par seconde
                     target.GetComponent<EnemyStats>().RemoveHealth(damage * .1f);
                     fireTime = Time.time;
+                    EventManager.TriggerEvent("unicorn");
                     Debug.Log("FIRE !!");
                 }
 

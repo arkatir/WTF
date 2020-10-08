@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.Events;
 using System.Collections;
 
 public class Flaregun : SlotItem
@@ -51,6 +52,7 @@ public class Flaregun : SlotItem
 
     void Shoot()
     {
+        EventManager.TriggerEvent("flareGun");
         currentRound--;
         if (currentRound <= 0)
         {

@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-
+using UnityEngine.Events;
 public class WallGun : SlotItem
 {
     public GameObject wallsPrefab;
@@ -28,6 +28,7 @@ public class WallGun : SlotItem
                 {
                     if (Time.time >= _lastShot + minIntervalBetweenShots)
                     {
+                        EventManager.TriggerEvent("gunMartin2");
                         ObjectPoolManager.managerInstance.CreateObject(projectileName, hitInfo.point + Vector3.up * 2, Quaternion.identity);
                         _lastShot = Time.time;
                     }

@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.Events;
 using UnityEngine.UI;
 using UnityEngine;
 
@@ -93,7 +94,7 @@ public class MachineGunController : SlotItem
                     gunAnimator.SetTrigger("Shoot");
                     psMuzzle.Play();
                 }
-
+                EventManager.TriggerEvent("machineGun");
                 currentTime = 0f;
                 currentBullets -= 1;
                 return;
@@ -116,7 +117,7 @@ public class MachineGunController : SlotItem
 
     private IEnumerator ReloadGun()
     {
-        
+        EventManager.TriggerEvent("reload");
         gunAnimator.SetTrigger("Reload"); //launch  anim
         //Fetch the current Animation clip information for the base layer
         var m_CurrentClipInfo = gunAnimator.GetCurrentAnimatorClipInfo(0);

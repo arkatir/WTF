@@ -1148,8 +1148,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1535882098916696218}
   - component: {fileID: 3788607953217906967}
+  - component: {fileID: 5126553467124036142}
   m_Layer: 0
-  m_Name: GameObject
+  m_Name: SFXGenerator
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1265,6 +1266,29 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &5126553467124036142
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5880441177673536429}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 60ed6ce53486572498b71a3a9a7a54cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  audiosrc: {fileID: 3788607953217906967}
+  machineGun: {fileID: 8300000, guid: d13e391868f4fc844889f84ae4781d7e, type: 3}
+  gravityGun: {fileID: 8300000, guid: ae6e7a09bc383f1428a25f41dccdfc32, type: 3}
+  unicorn: {fileID: 8300000, guid: 60e873f99a1170345b98ab0eb2c6cba0, type: 3}
+  gunMartin1: {fileID: 8300000, guid: 2964e76f912b61f4583e99442812f47c, type: 3}
+  gunMartin2: {fileID: 8300000, guid: 82a0d02df34a82844aaa92c4bbef6c53, type: 3}
+  flareGun: {fileID: 8300000, guid: 023022d4e0fc8ca469fed45d7fd91f2a, type: 3}
+  hurt: {fileID: 8300000, guid: dec49d91bc1b57847a16aefa8bf223a0, type: 3}
+  reload: {fileID: 8300000, guid: 490041ca126bbf3408b5ba4a25721b84, type: 3}
+  mushroomDie: {fileID: 0}
+  explosion: {fileID: 8300000, guid: dfd06c15f59890144823ba844273f581, type: 3}
 --- !u!1 &8747768995892367515
 GameObject:
   m_ObjectHideFlags: 0

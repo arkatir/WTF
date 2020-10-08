@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.Events;
 
 public class DivideGun : SlotItem
 {
@@ -27,6 +28,7 @@ public class DivideGun : SlotItem
             {
                 if (Time.time >= _lastShot + minIntervalBetweenShots)
                 {
+                    EventManager.TriggerEvent("gunMartin1");
                     ObjectPoolManager.managerInstance.CreateObject(projectileName, transform.parent.position, transform.parent.rotation);
                     _lastShot = Time.time;
                 }

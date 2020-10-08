@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.Events;
 using UnityEngine;
 
 public class GravityGunController : SlotItem
@@ -96,6 +97,7 @@ public class GravityGunController : SlotItem
                 objSelRigidB = objectTouchedRB;
                 particles.gameObject.SetActive(true);
                 objectHoldDistance = objectHoldInitialDistance;
+                EventManager.TriggerEvent("gravityGun");
             }
         }
     }

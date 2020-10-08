@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.Events;
 using UnityEngine;
 
 public class PlayerStats : MonoBehaviour
@@ -22,6 +23,7 @@ public class PlayerStats : MonoBehaviour
 
     public void RemoveHealth(int val)
     {
+        EventManager.TriggerEvent("hurt");
         int removedVal = health - val;
         if (removedVal < 0)
         {
