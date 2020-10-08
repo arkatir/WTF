@@ -19,7 +19,9 @@ public class LaserUnicorn : MonoBehaviour
             toEnemy.y = 0;
 
             float angleEmeny = Vector3.Angle(transform.forward, toEnemy.normalized);
-            if(angleEmeny > 100)
+            float distance = toEnemy.magnitude;
+            //si il a plus de vie, s'il est trop loin ou s'il y a plus d'angle
+            if (angleEmeny > 100 || distance > 10 || target.GetComponent<EnemyStats>().GetHealth() <=0) 
             {
                 l.SetPosition(1,Vector3.zero);
                 l.SetPosition(0, Vector3.zero);
