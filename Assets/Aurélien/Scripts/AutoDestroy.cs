@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.Events;
 using UnityEngine;
 
 public class AutoDestroy : MonoBehaviour
@@ -95,6 +96,7 @@ public class AutoDestroy : MonoBehaviour
                 obj.GetComponent<AutoDestroy>().StartCoroutine(WaitResume());
             }
         }
+        EventManager.TriggerEvent("explosion");
         Instantiate(explosion, transform.position, explosion.transform.rotation);
         Destroy(gameObject);
     }
