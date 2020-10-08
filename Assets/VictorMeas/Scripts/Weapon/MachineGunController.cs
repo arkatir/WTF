@@ -52,8 +52,10 @@ public class MachineGunController : SlotItem
     {
         if (gunAnimator)
         {
-            float speed = playerRb.velocity.magnitude;
-            gunAnimator.SetFloat("Speed", speed);
+            float speedX = Input.GetAxis("Horizontal");
+            float speedZ = Input.GetAxis("Vertical");
+            gunAnimator.SetFloat("SpeedX", speedX);
+            gunAnimator.SetFloat("SpeedZ", speedZ);
         }
     }
 

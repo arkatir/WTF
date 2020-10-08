@@ -31,7 +31,6 @@ public class StraightProjectile : MonoBehaviour
     private void OnEnable()
     {
         tr = this.GetComponent<TrailRenderer>();
-        rb = this.GetComponent<Rigidbody>();
         currentSpeed = projectileSpeed;
         rb.velocity = Vector3.zero;
         rb.velocity = transform.forward * currentSpeed;
@@ -48,7 +47,7 @@ public class StraightProjectile : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        //this.transform.position += transform.forward * (currentSpeed * Time.deltaTime);
     }
 
     private void OnCollisionEnter(Collision other)
