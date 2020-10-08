@@ -19,7 +19,6 @@ public class Crosshairs : MonoBehaviour
         _instance = this;
         _image = GetComponent<Image>();
         _rectTransform = GetComponent<RectTransform>();
-        SetAim(new Vector3(-20, 10, 0));
     }
 
     public Crosshairs SetColor(Color color)
