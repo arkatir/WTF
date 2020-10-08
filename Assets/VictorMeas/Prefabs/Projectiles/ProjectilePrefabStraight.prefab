@@ -155,7 +155,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   projectileSpeed: 40
-  damage: 10
+  damage: 20
   targetToHit: 1
   hitPrefab: {fileID: 0}
   timeToDeactivate: 3
