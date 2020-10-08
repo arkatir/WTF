@@ -16,8 +16,10 @@ public class EnemyStats : MonoBehaviour
 
     public Animator m_EnemyAnimator;
     public MeleeEnemyController m_EnemyController;
+    private AutoDestroy autoDestroy;
     void Start()
     {
+        autoDestroy = GetComponent<AutoDestroy>();
     }
 
     public void OnEnable()
@@ -37,9 +39,18 @@ public class EnemyStats : MonoBehaviour
         if (removedVal < 0)
         {
             health = 0;
-            if (!m_EnemyController.isDying)
+            if (m_EnemyController)
             {
-                StartCoroutine(RemoveAfterDeath());
+                if (!m_EnemyController.isDying)
+                {
+                    StartCoroutine(RemoveAfterDeath());
+                }
+
+            }
+
+            if(autoDestroy)
+            {
+                autoDestroy.beginExplosion();
             }
             
         }
