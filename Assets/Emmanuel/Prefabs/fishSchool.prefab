@@ -16,7 +16,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &7809342662015983167
 Transform:
   m_ObjectHideFlags: 0
@@ -43,15 +43,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30f45e814208fde4bb4e99bd157118ba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  initRangeX: 20
+  initRangeX: 40
   initRangeY: 20
-  initRangeZ: 80
-  goalRangeX: 20
-  goalRangeY: 30
-  goalRangeZ: 80
+  initRangeZ: 40
+  goalRangeX: 70
+  goalRangeY: 15
+  goalRangeZ: 70
   initRange: 20
   goalRange: 100
-  PlayerDetectionDistance: 20
+  PlayerDetectionDistance: 10
   fishPrefab: {fileID: 539039530148972000, guid: 9e8294cc1e6fe0145b9585914193d052, type: 3}
   fishNumber: 1000
   fishSchool: []
