@@ -87,13 +87,17 @@ namespace UnityStandardAssets.Characters.FirstPerson
         public float jetpackContinuousThrustPeriodInSeconds = 3f;
         public float jetpackMinThrustPeriodForActivationInSeconds = 1f;
         public float jetpackThrustTimeLeft;
+        public AudioSource jetpackLaunch;
+        public AudioSource jetpackThrust;
 
+        private float thrustingTimeElapsed = 0f;
         private bool jetpackMode = false;
         private Rigidbody m_RigidBody;
         private CapsuleCollider m_Capsule;
         private float m_YRotation;
         private Vector3 m_GroundContactNormal;
-        private bool m_Jump, m_PreviouslyGrounded, m_Jumping, m_IsGrounded, m_Thrust, m_Thrusting;
+        private bool m_Jump, m_PreviouslyGrounded, m_Jumping, m_IsGrounded;
+        private bool m_Thrust, m_Thrusting, m_ThrustSoundActivated;
 
         public Vector3 Velocity
         {
@@ -146,14 +150,33 @@ namespace UnityStandardAssets.Characters.FirstPerson
             {
                 if (CrossPlatformInputManager.GetButton("Jump") && jetpackThrustTimeLeft > 0)
                 {
+                    if (!m_Thrusting)
+                        jetpackLaunch.Play(); 
+
                     if (jetpackThrustTimeLeft > jetpackMinThrustPeriodForActivationInSeconds || m_Thrusting)
                     {
                         m_Thrust = true;
                         jetpackThrustTimeLeft -= Time.deltaTime;
                         m_Thrusting = true;
+                        thrustingTimeElapsed += Time.deltaTime;
                     }
+
+                    if (thrustingTimeElapsed > 0.1 && !m_ThrustSoundActivated)
+                    {
+                        jetpackThrust.Play();
+                        jetpackThrust.loop = true;
+                        m_ThrustSoundActivated = true;
+                    }
+
                 } else
+                {
                     m_Thrusting = false;
+                    m_ThrustSoundActivated = false;
+                    thrustingTimeElapsed = 0;
+                    jetpackThrust.loop = false;
+                    jetpackThrust.Stop();
+                }
+                    
 
                 if (!m_Thrusting && jetpackThrustTimeLeft < jetpackContinuousThrustPeriodInSeconds)
                     jetpackThrustTimeLeft += Time.deltaTime;
