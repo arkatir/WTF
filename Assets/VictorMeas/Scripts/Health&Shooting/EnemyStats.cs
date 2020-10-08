@@ -64,12 +64,12 @@ public class EnemyStats : MonoBehaviour
         }
     }
 
-    public int GetHealth()
+    public float GetHealth()
     {
         return health;
     }
 
-    public int SetHealth(int val)
+    public float SetHealth(float val)
     {
         health = val;
         return health;
