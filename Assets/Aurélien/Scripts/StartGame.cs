@@ -32,7 +32,7 @@ public class StartGame : MonoBehaviour
         controlsText.gameObject.SetActive(true);
         loadingText.gameObject.SetActive(true);
         loading.gameObject.SetActive(true);
-        //StartCoroutine(LoadGame());
+        StartCoroutine(LoadGame());
     }
 
     IEnumerator LoadGame()
@@ -40,11 +40,12 @@ public class StartGame : MonoBehaviour
         AsyncOperation result = SceneManager.LoadSceneAsync("Map");
         while (!result.isDone)
         {
-            float progress = result.progress;
+            float progress = Mathf.Clamp01(result.progress);
             loading.transform.localScale = new Vector3(progress, 1, 1);
             loadingText.text = "Loading : " + (progress * 100) + "%";
             yield return null;
-            Debug.Log(progress);
         }
+        
+        
     }
 }
