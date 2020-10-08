@@ -81,20 +81,19 @@ namespace UnityStandardAssets.Characters.FirstPerson
         public MovementSettings movementSettings = new MovementSettings();
         public MouseLook mouseLook = new MouseLook();
         public AdvancedSettings advancedSettings = new AdvancedSettings();
-        public bool jetpackMode = false;
+        
         public float jetpackThrustForce = 20f;
         public float jetpackMaxYVelocity = 20f;
         public float jetpackContinuousThrustPeriodInSeconds = 3f;
         public float jetpackMinThrustPeriodForActivationInSeconds = 1f;
-
         public float jetpackThrustTimeLeft;
+
+        private bool jetpackMode = false;
         private Rigidbody m_RigidBody;
         private CapsuleCollider m_Capsule;
         private float m_YRotation;
         private Vector3 m_GroundContactNormal;
-        private bool m_Jump, m_PreviouslyGrounded, m_Jumping, m_IsGrounded;
-        public bool m_Thrust, m_Thrusting;
-
+        private bool m_Jump, m_PreviouslyGrounded, m_Jumping, m_IsGrounded, m_Thrust, m_Thrusting;
 
         public Vector3 Velocity
         {
@@ -169,13 +168,10 @@ namespace UnityStandardAssets.Characters.FirstPerson
             else
                 m_IsGrounded = false;
 
-            Debug.Log("No ground check");
-
             Vector2 input = GetInput();
 
             if ((Mathf.Abs(input.x) > float.Epsilon || Mathf.Abs(input.y) > float.Epsilon || CrossPlatformInputManager.GetButton("Jump")) && (advancedSettings.airControl || m_IsGrounded || jetpackMode))
             {
-                Debug.Log("Control enabled");
                 // always move along the camera forward as it is the direction that it being aimed at
                 Vector3 desiredMove = cam.transform.forward*input.y + cam.transform.right*input.x;
                 if (!jetpackMode)
@@ -229,6 +225,11 @@ namespace UnityStandardAssets.Characters.FirstPerson
             m_Thrust = false;
         }
 
+        public bool SetJetpackMode(bool state)
+        {
+            jetpackMode = state;
+            return jetpackMode;
+        }
 
         private float SlopeMultiplier()
         {

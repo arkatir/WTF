@@ -550,8 +550,13 @@ MonoBehaviour:
     groundCheckDistance: 0.1
     stickToGroundHelperDistance: 0.6
     slowDownRate: 20
-    airControl: 0
+    airControl: 1
     shellOffset: 0
+  jetpackThrustForce: 150
+  jetpackMaxYVelocity: 20
+  jetpackContinuousThrustPeriodInSeconds: 3
+  jetpackMinThrustPeriodForActivationInSeconds: 1
+  jetpackThrustTimeLeft: 0
 --- !u!114 &291903867036362641
 MonoBehaviour:
   m_ObjectHideFlags: 0
