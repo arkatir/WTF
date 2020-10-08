@@ -18,6 +18,7 @@ public class GravityGunController : SlotItem
     public float objectHoldInitialDistance = 5f;
     public float objectHoldMinDistance = 2f;
     public float objectHoldDragSpeed = 1f;
+    public AudioSource gravityGunHold;
 
     private bool selected = false;
     private RaycastHit shootingRaycast;
@@ -98,6 +99,8 @@ public class GravityGunController : SlotItem
                 particles.gameObject.SetActive(true);
                 objectHoldDistance = objectHoldInitialDistance;
                 EventManager.TriggerEvent("gravityGun");
+                gravityGunHold.Play();
+                gravityGunHold.loop = true;
             }
         }
     }
@@ -113,6 +116,8 @@ public class GravityGunController : SlotItem
         objSelRigidB = null;
         objectHold = false;
         particles.gameObject.SetActive(false);
+        gravityGunHold.loop = false;
+        gravityGunHold.Stop();
     }
 
     private void HandleObject()
