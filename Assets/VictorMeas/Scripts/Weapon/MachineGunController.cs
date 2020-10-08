@@ -8,10 +8,12 @@ public class MachineGunController : SlotItem
     private bool selected = false;
     public float throwWeaponForce = 10f;
     private Quaternion rotationToPlayer;
-    public float xRotationToPlayer = -1.196f;
-    public float yRotationToPlayer = -84.201f;
-    public Vector3 positionToPlayer = new Vector3(0.001344124f, -0.6869054f, 0.51004f);
+    public float xRotationToPlayer = 5.359f;
+    public float yRotationToPlayer = -88.231f;
+    public float zRotationToPlayer = -4.898f;
+    public Vector3 positionToPlayer = new Vector3(1.029f, -1.401f, 2.639f);
 
+    private Rigidbody playerRb;
 
     //Gun info
     public GameObject projectileToShoot;
@@ -22,10 +24,14 @@ public class MachineGunController : SlotItem
     public float rateOfFire = 0.5f;
     private float currentTime;
     private string projectileName;
-    // Start is called before the first frame update
+    //Animator
+    public Animator gunAnimator;
+    public ParticleSystem psMuzzle;
+    private bool isReloading = false;
+
     void Start()
     {
-        rotationToPlayer = Quaternion.Euler(xRotationToPlayer, yRotationToPlayer, 0);
+        rotationToPlayer = Quaternion.Euler(xRotationToPlayer, yRotationToPlayer, zRotationToPlayer);
         projectileName = projectileToShoot.name;
         farAwayDirection = Camera.main.transform.GetChild(0);
     }
@@ -35,53 +41,86 @@ public class MachineGunController : SlotItem
     {
         if (selected)
         {
+            TransmitSpeed();
             CheckShoot();
             CheckReload();
         }
         
     }
 
+    public void TransmitSpeed()
+    {
+        if (gunAnimator)
+        {
+            float speed = playerRb.velocity.magnitude;
+            gunAnimator.SetFloat("Speed", speed);
+        }
+    }
+
     public void CheckShoot()
     {
-        if (Input.GetMouseButton(0) && (currentTime > rateOfFire) && (currentBullets>0))
+        if (isReloading == false)
         {
-            RaycastHit HitInfo;
-            if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out HitInfo, 1000.0f))
+            if (Input.GetMouseButton(0) && (currentTime > rateOfFire) && (currentBullets > 0))
             {
-                shootingOriginPoint.LookAt(HitInfo.point);
-                ObjectPoolManager.managerInstance.CreateObject(projectileName, shootingOriginPoint.position, shootingOriginPoint.rotation);
+                RaycastHit HitInfo;
+                if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out HitInfo, 1000.0f))
+                {
+                    shootingOriginPoint.LookAt(HitInfo.point);
+                    ObjectPoolManager.managerInstance.CreateObject(projectileName, shootingOriginPoint.position, shootingOriginPoint.rotation);
+                }
+                else
+                {
+                    shootingOriginPoint.LookAt(farAwayDirection.position);
+                    ObjectPoolManager.managerInstance.CreateObject(projectileName, shootingOriginPoint.position, shootingOriginPoint.rotation);
+                }
+                if (gunAnimator)
+                {
+                    gunAnimator.SetTrigger("Shoot");
+                    psMuzzle.Play();
+                }
+
+                currentTime = 0f;
+                currentBullets -= 1;
+                return;
             }
             else
             {
-                shootingOriginPoint.LookAt(farAwayDirection.position);
-                ObjectPoolManager.managerInstance.CreateObject(projectileName, shootingOriginPoint.position, shootingOriginPoint.rotation);
+                currentTime += Time.deltaTime;
             }
-                
-            currentTime = 0f;
-            currentBullets -= 1;
-            return;
         }
-        else
-        {
-            currentTime += Time.deltaTime;
-        }
-        
     }
 
     public void CheckReload()
     {
-        if (Input.GetKeyDown(KeyCode.R))
+        if (Input.GetKeyDown(KeyCode.R) && currentBullets<maxBullets && !isReloading)
         {
-            currentBullets = maxBullets;
+            isReloading = true;
+            StartCoroutine(ReloadGun());
         }
+    }
+
+    private IEnumerator ReloadGun()
+    {
+        
+        gunAnimator.SetTrigger("Reload"); //launch  anim
+        //Fetch the current Animation clip information for the base layer
+        var m_CurrentClipInfo = gunAnimator.GetCurrentAnimatorClipInfo(0);
+        //Access the current length of the clip
+        var m_CurrentClipLength = m_CurrentClipInfo[0].clip.length;
+        yield return new WaitForSeconds(m_CurrentClipLength + 1f); //Wait for end of clip before you can shoot
+        currentBullets = maxBullets;
+        isReloading = false;
+        yield return null;
     }
 
     public override void OnInsert()
     {
+        isReloading = false;
+        playerRb = Camera.main.transform.parent.GetComponent<Rigidbody>();
         GetComponent<Rigidbody>().isKinematic = true;
         GetComponentInChildren<MeshCollider>().enabled = false;
         transform.SetParent(Camera.main.transform);
-
         transform.localPosition = positionToPlayer;
         transform.localRotation = rotationToPlayer;
         selected = true;
@@ -90,6 +129,7 @@ public class MachineGunController : SlotItem
     public override void OnRemove()
     {
         StopAllCoroutines();
+        currentBullets = maxBullets;
         selected = false;
         transform.SetParent(null);
         GetComponent<Rigidbody>().isKinematic = false;

@@ -5,25 +5,37 @@ public class LaserUnicorn : MonoBehaviour
 {
 
     public float angleAim = 30;
-     private Transform target = null;
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
+    private Transform target = null;
+    private float timerDamage;
+    
     void Update()
     {
+        LineRenderer l = GetComponentInChildren<LineRenderer>();
         if (target != null)
         {
             Crosshairs.Get().SetAim(target.position);
             Vector3 toEnemy = target.position - transform.position;
+            toEnemy.y = 0;
 
             float angleEmeny = Vector3.Angle(transform.forward, toEnemy.normalized);
             if(angleEmeny > 100)
             {
+                l.SetPosition(1,Vector3.zero);
+                l.SetPosition(0, Vector3.zero);
                 target = null;
+            }
+            else
+            {
+               
+              l.SetPosition(1, target.position);
+              l.SetPosition(0, l.transform.position);
+
+                //faire des dégats
+                if (timerDamage > 1)
+                {
+
+                }
+
             }
         }
 
@@ -43,6 +55,7 @@ public class LaserUnicorn : MonoBehaviour
         {
             //on soustrait la distance de l'ennemy avec notre position de la licorne
             Vector3 toEnemy = enemy.transform.position - transform.position;
+            toEnemy.y = 0;
             //On récupère l'angle de notre notre enemi
             float angleEmeny = Vector3.Angle(transform.forward, toEnemy.normalized);
             if (angleEmeny < angleMin)
